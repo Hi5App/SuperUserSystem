@@ -3,6 +3,7 @@ package com.zhy.springboot.superuserserver.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.concurrent.Semaphore;
 
 /**
@@ -14,6 +15,7 @@ import java.util.concurrent.Semaphore;
 @Component
 @ConfigurationProperties(prefix="globalconfig")
 public class GlobalConfigs {
+    private String urlForGetBBimage;
     private String urlForCrossingModel;
     private String urlForMissingModel;
 
@@ -23,6 +25,35 @@ public class GlobalConfigs {
     private String tmpDir;
     private String imageDir;
     private int cropprocess;
+    private String savePathForPredict;
+    private int[] patchSize;
+
+    public String getUrlForGetBBimage() {
+        return urlForGetBBimage;
+    }
+
+    public void setUrlForGetBBimage(String urlForGetBBimage) {
+        this.urlForGetBBimage = urlForGetBBimage;
+    }
+
+    public int[] getPatchSize() {
+        return patchSize;
+    }
+
+    public void setPatchSize(int[] patchSize) {
+        this.patchSize = new int[patchSize.length];
+        for(int i=0;i<patchSize.length;i++){
+            this.patchSize[i]=patchSize[i];
+        }
+    }
+
+    public String getSavePathForPredict() {
+        return savePathForPredict;
+    }
+
+    public void setSavePathForPredict(String savePathForPredict) {
+        this.savePathForPredict = savePathForPredict;
+    }
 
     public String getUrlForCrossingModel() {
         return urlForCrossingModel;
@@ -91,7 +122,8 @@ public class GlobalConfigs {
     @Override
     public String toString() {
         return "GlobalConfigs{" +
-                "urlForCrossingModel='" + urlForCrossingModel + '\'' +
+                "urlForGetBBimage='" + urlForGetBBimage + '\'' +
+                ", urlForCrossingModel='" + urlForCrossingModel + '\'' +
                 ", urlForMissingModel='" + urlForMissingModel + '\'' +
                 ", mainPath='" + mainPath + '\'' +
                 ", cropImageBin='" + cropImageBin + '\'' +
@@ -99,6 +131,8 @@ public class GlobalConfigs {
                 ", tmpDir='" + tmpDir + '\'' +
                 ", imageDir='" + imageDir + '\'' +
                 ", cropprocess=" + cropprocess +
+                ", savePathForPredict='" + savePathForPredict + '\'' +
+                ", patchSize=" + Arrays.toString(patchSize) +
                 '}';
     }
 }

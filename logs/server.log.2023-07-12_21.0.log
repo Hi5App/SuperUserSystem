@@ -1,0 +1,294 @@
+2023-07-12 21:08:33.567  INFO 57960 --- [main] c.z.s.s.SuperUserServerApplicationTests  : Starting SuperUserServerApplicationTests using Java 1.8.0_311 on zhy with PID 57960 (started by zhy in D:\source\JavaProjects\SuperUserServer)
+2023-07-12 21:08:33.571  INFO 57960 --- [main] c.z.s.s.SuperUserServerApplicationTests  : No active profile set, falling back to 1 default profile: "default"
+2023-07-12 21:08:36.238  INFO 57960 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 15 endpoint(s) beneath base path '/actuator'
+2023-07-12 21:08:36.293  INFO 57960 --- [main] c.z.s.s.SuperUserServerApplicationTests  : Started SuperUserServerApplicationTests in 3.016 seconds (JVM running for 3.748)
+2023-07-12 21:08:36.335 ERROR 57960 --- [registrationTask1] o.s.s.s.TaskUtils$LoggingErrorHandler    : Unexpected error occurred in scheduled task
+
+java.lang.IllegalStateException: couldn't determine local port. Please set spring.boot.admin.client.instance.service-base-url.
+	at de.codecentric.boot.admin.client.registration.DefaultApplicationFactory.getLocalServerPort(DefaultApplicationFactory.java:192) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at de.codecentric.boot.admin.client.registration.DefaultApplicationFactory.getServiceBaseUrl(DefaultApplicationFactory.java:104) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at de.codecentric.boot.admin.client.registration.ServletApplicationFactory.getServiceUrl(ServletApplicationFactory.java:63) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at de.codecentric.boot.admin.client.registration.ServletApplicationFactory.getManagementBaseUrl(ServletApplicationFactory.java:76) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at de.codecentric.boot.admin.client.registration.DefaultApplicationFactory.getHealthUrl(DefaultApplicationFactory.java:154) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at de.codecentric.boot.admin.client.registration.DefaultApplicationFactory.createApplication(DefaultApplicationFactory.java:80) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at de.codecentric.boot.admin.client.registration.DefaultApplicationRegistrator.register(DefaultApplicationRegistrator.java:56) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54) ~[spring-context-5.3.27.jar:5.3.27]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_311]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [na:1.8.0_311]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [na:1.8.0_311]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [na:1.8.0_311]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_311]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_311]
+	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_311]
+
+2023-07-12 21:14:14.093  INFO 56916 --- [restartedMain] c.z.s.s.SuperUserServerApplication       : Starting SuperUserServerApplication using Java 1.8.0_311 on zhy with PID 56916 (D:\source\JavaProjects\SuperUserServer\target\classes started by zhy in D:\source\JavaProjects\SuperUserServer)
+2023-07-12 21:14:14.094  INFO 56916 --- [restartedMain] c.z.s.s.SuperUserServerApplication       : No active profile set, falling back to 1 default profile: "default"
+2023-07-12 21:14:14.127  INFO 56916 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-07-12 21:14:14.127  INFO 56916 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-07-12 21:14:14.908  INFO 56916 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-07-12 21:14:14.909  INFO 56916 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : Loaded Apache Tomcat Native library [1.2.31] using APR version [1.7.0].
+2023-07-12 21:14:14.909  INFO 56916 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [true].
+2023-07-12 21:14:14.909  INFO 56916 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2023-07-12 21:14:14.912  INFO 56916 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 1.1.1l  24 Aug 2021]
+2023-07-12 21:14:14.917  INFO 56916 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-07-12 21:14:14.917  INFO 56916 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.74]
+2023-07-12 21:14:14.982  INFO 56916 --- [restartedMain] o.a.c.c.C.[.[localhost].[/SuperUser]     : Initializing Spring embedded WebApplicationContext
+2023-07-12 21:14:14.982  INFO 56916 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 854 ms
+2023-07-12 21:14:15.854  INFO 56916 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-07-12 21:14:15.857  INFO 56916 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 15 endpoint(s) beneath base path '/actuator'
+2023-07-12 21:14:15.891  INFO 56916 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/SuperUser'
+2023-07-12 21:14:15.902  INFO 56916 --- [restartedMain] c.z.s.s.SuperUserServerApplication       : Started SuperUserServerApplication in 2.129 seconds (JVM running for 4.614)
+2023-07-12 21:14:16.370  INFO 56916 --- [RMI TCP Connection(2)-172.26.32.1] o.a.c.c.C.[.[localhost].[/SuperUser]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-07-12 21:14:16.370  INFO 56916 --- [RMI TCP Connection(2)-172.26.32.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-07-12 21:14:16.371  INFO 56916 --- [RMI TCP Connection(2)-172.26.32.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2023-07-12 21:14:20.044  WARN 56916 --- [registrationTask1] d.c.b.a.c.r.ApplicationRegistrator       : Failed to register application as Application(name=SuperUserServer, managementUrl=http://172.26.32.1:8080/SuperUser/actuator, healthUrl=http://172.26.32.1:8080/SuperUser/actuator/health, serviceUrl=http://172.26.32.1:8080/SuperUser) at spring-boot-admin ([http://localhost:8880/instances]): I/O error on POST request for "http://localhost:8880/instances": Failed to connect to localhost/0:0:0:0:0:0:0:1:8880; nested exception is java.net.ConnectException: Failed to connect to localhost/0:0:0:0:0:0:0:1:8880. Further attempts are logged on DEBUG level
+2023-07-12 21:14:36.082  INFO 56916 --- [http-nio-8080-exec-2] c.z.s.s.controller.DetectController      : send file success!
+2023-07-12 21:14:59.375  INFO 56916 --- [http-nio-8080-exec-5] c.z.s.s.controller.DetectController      : swcfile not exists!
+2023-07-12 21:15:57.079  INFO 56920 --- [restartedMain] c.z.s.s.SuperUserServerApplication       : Starting SuperUserServerApplication using Java 1.8.0_311 on zhy with PID 56920 (D:\source\JavaProjects\SuperUserServer\target\classes started by zhy in D:\source\JavaProjects\SuperUserServer)
+2023-07-12 21:15:57.080  INFO 56920 --- [restartedMain] c.z.s.s.SuperUserServerApplication       : No active profile set, falling back to 1 default profile: "default"
+2023-07-12 21:15:57.110  INFO 56920 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-07-12 21:15:57.110  INFO 56920 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-07-12 21:15:57.952  INFO 56920 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-07-12 21:15:57.953  INFO 56920 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : Loaded Apache Tomcat Native library [1.2.31] using APR version [1.7.0].
+2023-07-12 21:15:57.953  INFO 56920 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [true].
+2023-07-12 21:15:57.953  INFO 56920 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2023-07-12 21:15:57.955  INFO 56920 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 1.1.1l  24 Aug 2021]
+2023-07-12 21:15:57.960  INFO 56920 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-07-12 21:15:57.960  INFO 56920 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.74]
+2023-07-12 21:15:58.028  INFO 56920 --- [restartedMain] o.a.c.c.C.[.[localhost].[/SuperUser]     : Initializing Spring embedded WebApplicationContext
+2023-07-12 21:15:58.028  INFO 56920 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 917 ms
+2023-07-12 21:15:58.905  INFO 56920 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-07-12 21:15:58.908  INFO 56920 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 15 endpoint(s) beneath base path '/actuator'
+2023-07-12 21:15:58.940  INFO 56920 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/SuperUser'
+2023-07-12 21:15:58.951  INFO 56920 --- [restartedMain] c.z.s.s.SuperUserServerApplication       : Started SuperUserServerApplication in 2.198 seconds (JVM running for 4.137)
+2023-07-12 21:15:59.048  INFO 56920 --- [RMI TCP Connection(1)-172.26.32.1] o.a.c.c.C.[.[localhost].[/SuperUser]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-07-12 21:15:59.048  INFO 56920 --- [RMI TCP Connection(1)-172.26.32.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-07-12 21:15:59.050  INFO 56920 --- [RMI TCP Connection(1)-172.26.32.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2023-07-12 21:16:03.092  WARN 56920 --- [registrationTask1] d.c.b.a.c.r.ApplicationRegistrator       : Failed to register application as Application(name=SuperUserServer, managementUrl=http://172.26.32.1:8080/SuperUser/actuator, healthUrl=http://172.26.32.1:8080/SuperUser/actuator/health, serviceUrl=http://172.26.32.1:8080/SuperUser) at spring-boot-admin ([http://localhost:8880/instances]): I/O error on POST request for "http://localhost:8880/instances": Failed to connect to localhost/0:0:0:0:0:0:0:1:8880; nested exception is java.net.ConnectException: Failed to connect to localhost/0:0:0:0:0:0:0:1:8880. Further attempts are logged on DEBUG level
+2023-07-12 21:16:15.532  INFO 56920 --- [http-nio-8080-exec-1] c.z.s.s.controller.DetectController      : send file success!
+2023-07-12 21:16:24.635  INFO 56920 --- [http-nio-8080-exec-3] c.z.s.s.controller.DetectController      : swcfile not exists!
+2023-07-12 21:33:45.226  INFO 56620 --- [restartedMain] c.z.s.s.SuperUserServerApplication       : Starting SuperUserServerApplication using Java 1.8.0_311 on zhy with PID 56620 (D:\source\JavaProjects\SuperUserServer\target\classes started by zhy in D:\source\JavaProjects\SuperUserServer)
+2023-07-12 21:33:45.227  INFO 56620 --- [restartedMain] c.z.s.s.SuperUserServerApplication       : No active profile set, falling back to 1 default profile: "default"
+2023-07-12 21:33:45.265  INFO 56620 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-07-12 21:33:45.265  INFO 56620 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-07-12 21:33:46.116  INFO 56620 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-07-12 21:33:46.117  INFO 56620 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : Loaded Apache Tomcat Native library [1.2.31] using APR version [1.7.0].
+2023-07-12 21:33:46.117  INFO 56620 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [true].
+2023-07-12 21:33:46.117  INFO 56620 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2023-07-12 21:33:46.119  INFO 56620 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 1.1.1l  24 Aug 2021]
+2023-07-12 21:33:46.124  INFO 56620 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-07-12 21:33:46.125  INFO 56620 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.74]
+2023-07-12 21:33:46.193  INFO 56620 --- [restartedMain] o.a.c.c.C.[.[localhost].[/SuperUser]     : Initializing Spring embedded WebApplicationContext
+2023-07-12 21:33:46.194  INFO 56620 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 928 ms
+2023-07-12 21:33:47.106  INFO 56620 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-07-12 21:33:47.110  INFO 56620 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 15 endpoint(s) beneath base path '/actuator'
+2023-07-12 21:33:47.142  INFO 56620 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/SuperUser'
+2023-07-12 21:33:47.155  INFO 56620 --- [restartedMain] c.z.s.s.SuperUserServerApplication       : Started SuperUserServerApplication in 2.282 seconds (JVM running for 4.246)
+2023-07-12 21:33:47.207  INFO 56620 --- [RMI TCP Connection(1)-172.26.32.1] o.a.c.c.C.[.[localhost].[/SuperUser]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-07-12 21:33:47.207  INFO 56620 --- [RMI TCP Connection(1)-172.26.32.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-07-12 21:33:47.208  INFO 56620 --- [RMI TCP Connection(1)-172.26.32.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2023-07-12 21:33:51.277  WARN 56620 --- [registrationTask1] d.c.b.a.c.r.ApplicationRegistrator       : Failed to register application as Application(name=SuperUserServer, managementUrl=http://172.26.32.1:8080/SuperUser/actuator, healthUrl=http://172.26.32.1:8080/SuperUser/actuator/health, serviceUrl=http://172.26.32.1:8080/SuperUser) at spring-boot-admin ([http://localhost:8880/instances]): I/O error on POST request for "http://localhost:8880/instances": Failed to connect to localhost/0:0:0:0:0:0:0:1:8880; nested exception is java.net.ConnectException: Failed to connect to localhost/0:0:0:0:0:0:0:1:8880. Further attempts are logged on DEBUG level
+2023-07-12 21:34:05.457 ERROR 56620 --- [http-nio-8080-exec-1] c.z.s.s.controller.DetectController      : 系统找不到指定的路径。
+2023-07-12 21:34:05.457 ERROR 56620 --- [http-nio-8080-exec-1] c.z.s.s.controller.DetectController      : null
+2023-07-12 21:34:05.469  WARN 56620 --- [http-nio-8080-exec-1] s.w.m.s.StandardServletMultipartResolver : Failed to perform cleanup of multipart items
+
+java.io.UncheckedIOException: Cannot delete C:\Users\10422\AppData\Local\Temp\tomcat.8080.7410894464696984527\work\Tomcat\localhost\SuperUser\upload_9cd8e439_ecca_43f3_a9bf_7b5679043ec4_00000000.tmp
+	at org.apache.tomcat.util.http.fileupload.disk.DiskFileItem.delete(DiskFileItem.java:431) ~[tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.catalina.core.ApplicationPart.delete(ApplicationPart.java:53) ~[tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.springframework.web.multipart.support.StandardServletMultipartResolver.cleanupMultipart(StandardServletMultipartResolver.java:134) ~[spring-web-5.3.27.jar:5.3.27]
+	at org.springframework.web.servlet.DispatcherServlet.cleanupMultipart(DispatcherServlet.java:1251) [spring-webmvc-5.3.27.jar:5.3.27]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1108) [spring-webmvc-5.3.27.jar:5.3.27]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:965) [spring-webmvc-5.3.27.jar:5.3.27]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) [spring-webmvc-5.3.27.jar:5.3.27]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909) [spring-webmvc-5.3.27.jar:5.3.27]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:555) [tomcat-embed-core-9.0.74.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) [spring-webmvc-5.3.27.jar:5.3.27]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:623) [tomcat-embed-core-9.0.74.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:209) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) [tomcat-embed-websocket-9.0.74.jar:9.0.74]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) [spring-web-5.3.27.jar:5.3.27]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) [spring-web-5.3.27.jar:5.3.27]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) [spring-web-5.3.27.jar:5.3.27]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) [spring-web-5.3.27.jar:5.3.27]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:96) [spring-boot-actuator-2.7.11.jar:2.7.11]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) [spring-web-5.3.27.jar:5.3.27]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) [spring-web-5.3.27.jar:5.3.27]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) [spring-web-5.3.27.jar:5.3.27]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:481) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:130) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:389) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:926) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1791) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_311]
+Caused by: java.io.IOException: Cannot delete C:\Users\10422\AppData\Local\Temp\tomcat.8080.7410894464696984527\work\Tomcat\localhost\SuperUser\upload_9cd8e439_ecca_43f3_a9bf_7b5679043ec4_00000000.tmp
+	... 48 common frames omitted
+
+2023-07-12 21:34:05.474 ERROR 56620 --- [http-nio-8080-exec-1] o.apache.coyote.http11.Http11Processor   : Error processing request
+
+java.io.UncheckedIOException: Cannot delete C:\Users\10422\AppData\Local\Temp\tomcat.8080.7410894464696984527\work\Tomcat\localhost\SuperUser\upload_9cd8e439_ecca_43f3_a9bf_7b5679043ec4_00000000.tmp
+	at org.apache.tomcat.util.http.fileupload.disk.DiskFileItem.delete(DiskFileItem.java:431) ~[tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.catalina.core.ApplicationPart.delete(ApplicationPart.java:53) ~[tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.catalina.connector.Request.recycle(Request.java:474) ~[tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:421) ~[tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:389) ~[tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:926) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1791) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_311]
+Caused by: java.io.IOException: Cannot delete C:\Users\10422\AppData\Local\Temp\tomcat.8080.7410894464696984527\work\Tomcat\localhost\SuperUser\upload_9cd8e439_ecca_43f3_a9bf_7b5679043ec4_00000000.tmp
+	... 13 common frames omitted
+
+2023-07-12 21:34:05.476 ERROR 56620 --- [http-nio-8080-exec-1] o.a.coyote.http11.Http11NioProtocol      : Error reading request, ignored
+
+java.io.UncheckedIOException: Cannot delete C:\Users\10422\AppData\Local\Temp\tomcat.8080.7410894464696984527\work\Tomcat\localhost\SuperUser\upload_9cd8e439_ecca_43f3_a9bf_7b5679043ec4_00000000.tmp
+	at org.apache.tomcat.util.http.fileupload.disk.DiskFileItem.delete(DiskFileItem.java:431) ~[tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.catalina.core.ApplicationPart.delete(ApplicationPart.java:53) ~[tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.catalina.connector.Request.recycle(Request.java:474) ~[tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.catalina.connector.CoyoteAdapter.log(CoyoteAdapter.java:494) ~[tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:419) ~[tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:926) ~[tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1791) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_311]
+Caused by: java.io.IOException: Cannot delete C:\Users\10422\AppData\Local\Temp\tomcat.8080.7410894464696984527\work\Tomcat\localhost\SuperUser\upload_9cd8e439_ecca_43f3_a9bf_7b5679043ec4_00000000.tmp
+	... 13 common frames omitted
+
+2023-07-12 21:34:05.477 ERROR 56620 --- [http-nio-8080-exec-1] org.apache.tomcat.util.net.NioEndpoint   : Error running socket processor
+
+java.io.UncheckedIOException: Cannot delete C:\Users\10422\AppData\Local\Temp\tomcat.8080.7410894464696984527\work\Tomcat\localhost\SuperUser\upload_9cd8e439_ecca_43f3_a9bf_7b5679043ec4_00000000.tmp
+	at org.apache.tomcat.util.http.fileupload.disk.DiskFileItem.delete(DiskFileItem.java:431) ~[tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.catalina.core.ApplicationPart.delete(ApplicationPart.java:53) ~[tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.catalina.connector.Request.recycle(Request.java:474) ~[tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.catalina.connector.CoyoteAdapter.log(CoyoteAdapter.java:494) ~[tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.catalina.connector.CoyoteAdapter.checkRecycled(CoyoteAdapter.java:517) ~[tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.coyote.http11.Http11Processor.recycle(Http11Processor.java:1415) ~[tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.release(AbstractProtocol.java:1129) ~[tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1090) ~[tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1791) ~[tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-embed-core-9.0.74.jar:9.0.74]
+	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_311]
+Caused by: java.io.IOException: Cannot delete C:\Users\10422\AppData\Local\Temp\tomcat.8080.7410894464696984527\work\Tomcat\localhost\SuperUser\upload_9cd8e439_ecca_43f3_a9bf_7b5679043ec4_00000000.tmp
+	... 14 common frames omitted
+
+2023-07-12 21:36:15.790  INFO 47404 --- [main] c.z.s.s.SuperUserServerApplicationTests  : Starting SuperUserServerApplicationTests using Java 1.8.0_311 on zhy with PID 47404 (started by zhy in D:\source\JavaProjects\SuperUserServer)
+2023-07-12 21:36:15.792  INFO 47404 --- [main] c.z.s.s.SuperUserServerApplicationTests  : No active profile set, falling back to 1 default profile: "default"
+2023-07-12 21:36:18.411  INFO 47404 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 15 endpoint(s) beneath base path '/actuator'
+2023-07-12 21:36:18.475  INFO 47404 --- [main] c.z.s.s.SuperUserServerApplicationTests  : Started SuperUserServerApplicationTests in 2.978 seconds (JVM running for 3.693)
+2023-07-12 21:36:18.518 ERROR 47404 --- [registrationTask1] o.s.s.s.TaskUtils$LoggingErrorHandler    : Unexpected error occurred in scheduled task
+
+java.lang.IllegalStateException: couldn't determine local port. Please set spring.boot.admin.client.instance.service-base-url.
+	at de.codecentric.boot.admin.client.registration.DefaultApplicationFactory.getLocalServerPort(DefaultApplicationFactory.java:192) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at de.codecentric.boot.admin.client.registration.DefaultApplicationFactory.getServiceBaseUrl(DefaultApplicationFactory.java:104) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at de.codecentric.boot.admin.client.registration.ServletApplicationFactory.getServiceUrl(ServletApplicationFactory.java:63) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at de.codecentric.boot.admin.client.registration.ServletApplicationFactory.getManagementBaseUrl(ServletApplicationFactory.java:76) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at de.codecentric.boot.admin.client.registration.DefaultApplicationFactory.getHealthUrl(DefaultApplicationFactory.java:154) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at de.codecentric.boot.admin.client.registration.DefaultApplicationFactory.createApplication(DefaultApplicationFactory.java:80) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at de.codecentric.boot.admin.client.registration.DefaultApplicationRegistrator.register(DefaultApplicationRegistrator.java:56) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54) ~[spring-context-5.3.27.jar:5.3.27]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_311]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [na:1.8.0_311]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [na:1.8.0_311]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [na:1.8.0_311]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_311]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_311]
+	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_311]
+
+2023-07-12 21:37:00.741  INFO 55772 --- [main] c.z.s.s.SuperUserServerApplicationTests  : Starting SuperUserServerApplicationTests using Java 1.8.0_311 on zhy with PID 55772 (started by zhy in D:\source\JavaProjects\SuperUserServer)
+2023-07-12 21:37:00.742  INFO 55772 --- [main] c.z.s.s.SuperUserServerApplicationTests  : No active profile set, falling back to 1 default profile: "default"
+2023-07-12 21:37:03.430  INFO 55772 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 15 endpoint(s) beneath base path '/actuator'
+2023-07-12 21:37:03.487  INFO 55772 --- [main] c.z.s.s.SuperUserServerApplicationTests  : Started SuperUserServerApplicationTests in 3.046 seconds (JVM running for 3.828)
+2023-07-12 21:37:03.526 ERROR 55772 --- [registrationTask1] o.s.s.s.TaskUtils$LoggingErrorHandler    : Unexpected error occurred in scheduled task
+
+java.lang.IllegalStateException: couldn't determine local port. Please set spring.boot.admin.client.instance.service-base-url.
+	at de.codecentric.boot.admin.client.registration.DefaultApplicationFactory.getLocalServerPort(DefaultApplicationFactory.java:192) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at de.codecentric.boot.admin.client.registration.DefaultApplicationFactory.getServiceBaseUrl(DefaultApplicationFactory.java:104) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at de.codecentric.boot.admin.client.registration.ServletApplicationFactory.getServiceUrl(ServletApplicationFactory.java:63) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at de.codecentric.boot.admin.client.registration.ServletApplicationFactory.getManagementBaseUrl(ServletApplicationFactory.java:76) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at de.codecentric.boot.admin.client.registration.DefaultApplicationFactory.getHealthUrl(DefaultApplicationFactory.java:154) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at de.codecentric.boot.admin.client.registration.DefaultApplicationFactory.createApplication(DefaultApplicationFactory.java:80) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at de.codecentric.boot.admin.client.registration.DefaultApplicationRegistrator.register(DefaultApplicationRegistrator.java:56) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54) ~[spring-context-5.3.27.jar:5.3.27]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_311]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [na:1.8.0_311]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [na:1.8.0_311]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [na:1.8.0_311]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_311]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_311]
+	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_311]
+
+2023-07-12 21:38:06.391  INFO 55692 --- [restartedMain] c.z.s.s.SuperUserServerApplication       : Starting SuperUserServerApplication using Java 1.8.0_311 on zhy with PID 55692 (D:\source\JavaProjects\SuperUserServer\target\classes started by zhy in D:\source\JavaProjects\SuperUserServer)
+2023-07-12 21:38:06.392  INFO 55692 --- [restartedMain] c.z.s.s.SuperUserServerApplication       : No active profile set, falling back to 1 default profile: "default"
+2023-07-12 21:38:06.423  INFO 55692 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-07-12 21:38:06.423  INFO 55692 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-07-12 21:38:07.239  INFO 55692 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-07-12 21:38:07.240  INFO 55692 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : Loaded Apache Tomcat Native library [1.2.31] using APR version [1.7.0].
+2023-07-12 21:38:07.241  INFO 55692 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [true].
+2023-07-12 21:38:07.241  INFO 55692 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2023-07-12 21:38:07.243  INFO 55692 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 1.1.1l  24 Aug 2021]
+2023-07-12 21:38:07.254  INFO 55692 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-07-12 21:38:07.254  INFO 55692 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.74]
+2023-07-12 21:38:07.324  INFO 55692 --- [restartedMain] o.a.c.c.C.[.[localhost].[/SuperUser]     : Initializing Spring embedded WebApplicationContext
+2023-07-12 21:38:07.325  INFO 55692 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 901 ms
+2023-07-12 21:38:08.223  INFO 55692 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-07-12 21:38:08.226  INFO 55692 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 15 endpoint(s) beneath base path '/actuator'
+2023-07-12 21:38:08.260  INFO 55692 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/SuperUser'
+2023-07-12 21:38:08.270  INFO 55692 --- [restartedMain] c.z.s.s.SuperUserServerApplication       : Started SuperUserServerApplication in 2.253 seconds (JVM running for 4.197)
+2023-07-12 21:38:08.681  INFO 55692 --- [RMI TCP Connection(2)-172.26.32.1] o.a.c.c.C.[.[localhost].[/SuperUser]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-07-12 21:38:08.681  INFO 55692 --- [RMI TCP Connection(2)-172.26.32.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-07-12 21:38:08.682  INFO 55692 --- [RMI TCP Connection(2)-172.26.32.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2023-07-12 21:38:12.397  WARN 55692 --- [registrationTask1] d.c.b.a.c.r.ApplicationRegistrator       : Failed to register application as Application(name=SuperUserServer, managementUrl=http://172.26.32.1:8080/SuperUser/actuator, healthUrl=http://172.26.32.1:8080/SuperUser/actuator/health, serviceUrl=http://172.26.32.1:8080/SuperUser) at spring-boot-admin ([http://localhost:8880/instances]): I/O error on POST request for "http://localhost:8880/instances": Failed to connect to localhost/0:0:0:0:0:0:0:1:8880; nested exception is java.net.ConnectException: Failed to connect to localhost/0:0:0:0:0:0:0:1:8880. Further attempts are logged on DEBUG level
+2023-07-12 21:38:39.612  INFO 43476 --- [main] c.z.s.s.SuperUserServerApplicationTests  : Starting SuperUserServerApplicationTests using Java 1.8.0_311 on zhy with PID 43476 (started by zhy in D:\source\JavaProjects\SuperUserServer)
+2023-07-12 21:38:39.613  INFO 43476 --- [main] c.z.s.s.SuperUserServerApplicationTests  : No active profile set, falling back to 1 default profile: "default"
+2023-07-12 21:38:42.351  INFO 43476 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 15 endpoint(s) beneath base path '/actuator'
+2023-07-12 21:38:42.407  INFO 43476 --- [main] c.z.s.s.SuperUserServerApplicationTests  : Started SuperUserServerApplicationTests in 3.07 seconds (JVM running for 3.815)
+2023-07-12 21:38:42.442 ERROR 43476 --- [registrationTask1] o.s.s.s.TaskUtils$LoggingErrorHandler    : Unexpected error occurred in scheduled task
+
+java.lang.IllegalStateException: couldn't determine local port. Please set spring.boot.admin.client.instance.service-base-url.
+	at de.codecentric.boot.admin.client.registration.DefaultApplicationFactory.getLocalServerPort(DefaultApplicationFactory.java:192) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at de.codecentric.boot.admin.client.registration.DefaultApplicationFactory.getServiceBaseUrl(DefaultApplicationFactory.java:104) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at de.codecentric.boot.admin.client.registration.ServletApplicationFactory.getServiceUrl(ServletApplicationFactory.java:63) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at de.codecentric.boot.admin.client.registration.ServletApplicationFactory.getManagementBaseUrl(ServletApplicationFactory.java:76) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at de.codecentric.boot.admin.client.registration.DefaultApplicationFactory.getHealthUrl(DefaultApplicationFactory.java:154) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at de.codecentric.boot.admin.client.registration.DefaultApplicationFactory.createApplication(DefaultApplicationFactory.java:80) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at de.codecentric.boot.admin.client.registration.DefaultApplicationRegistrator.register(DefaultApplicationRegistrator.java:56) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54) ~[spring-context-5.3.27.jar:5.3.27]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_311]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [na:1.8.0_311]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [na:1.8.0_311]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [na:1.8.0_311]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_311]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_311]
+	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_311]
+

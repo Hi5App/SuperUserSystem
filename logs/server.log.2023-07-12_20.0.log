@@ -1,0 +1,45 @@
+2023-07-12 20:16:44.619  INFO 56408 --- [main] c.z.s.s.SuperUserServerApplicationTests  : Starting SuperUserServerApplicationTests using Java 1.8.0_311 on zhy with PID 56408 (started by zhy in D:\source\JavaProjects\SuperUserServer)
+2023-07-12 20:16:44.626  INFO 56408 --- [main] c.z.s.s.SuperUserServerApplicationTests  : No active profile set, falling back to 1 default profile: "default"
+2023-07-12 20:16:47.260  INFO 56408 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 15 endpoint(s) beneath base path '/actuator'
+2023-07-12 20:16:47.316  INFO 56408 --- [main] c.z.s.s.SuperUserServerApplicationTests  : Started SuperUserServerApplicationTests in 2.994 seconds (JVM running for 3.727)
+2023-07-12 20:16:47.351 ERROR 56408 --- [registrationTask1] o.s.s.s.TaskUtils$LoggingErrorHandler    : Unexpected error occurred in scheduled task
+
+java.lang.IllegalStateException: couldn't determine local port. Please set spring.boot.admin.client.instance.service-base-url.
+	at de.codecentric.boot.admin.client.registration.DefaultApplicationFactory.getLocalServerPort(DefaultApplicationFactory.java:192) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at de.codecentric.boot.admin.client.registration.DefaultApplicationFactory.getServiceBaseUrl(DefaultApplicationFactory.java:104) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at de.codecentric.boot.admin.client.registration.ServletApplicationFactory.getServiceUrl(ServletApplicationFactory.java:63) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at de.codecentric.boot.admin.client.registration.ServletApplicationFactory.getManagementBaseUrl(ServletApplicationFactory.java:76) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at de.codecentric.boot.admin.client.registration.DefaultApplicationFactory.getHealthUrl(DefaultApplicationFactory.java:154) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at de.codecentric.boot.admin.client.registration.DefaultApplicationFactory.createApplication(DefaultApplicationFactory.java:80) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at de.codecentric.boot.admin.client.registration.DefaultApplicationRegistrator.register(DefaultApplicationRegistrator.java:56) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54) ~[spring-context-5.3.27.jar:5.3.27]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_311]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [na:1.8.0_311]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [na:1.8.0_311]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [na:1.8.0_311]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_311]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_311]
+	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_311]
+
+2023-07-12 20:29:41.377  INFO 50964 --- [restartedMain] c.z.s.s.SuperUserServerApplication       : Starting SuperUserServerApplication using Java 1.8.0_311 on zhy with PID 50964 (D:\source\JavaProjects\SuperUserServer\target\classes started by zhy in D:\source\JavaProjects\SuperUserServer)
+2023-07-12 20:29:41.377  INFO 50964 --- [restartedMain] c.z.s.s.SuperUserServerApplication       : No active profile set, falling back to 1 default profile: "default"
+2023-07-12 20:29:41.409  INFO 50964 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-07-12 20:29:41.409  INFO 50964 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-07-12 20:29:42.273  INFO 50964 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-07-12 20:29:42.274  INFO 50964 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : Loaded Apache Tomcat Native library [1.2.31] using APR version [1.7.0].
+2023-07-12 20:29:42.274  INFO 50964 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [true].
+2023-07-12 20:29:42.275  INFO 50964 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2023-07-12 20:29:42.277  INFO 50964 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 1.1.1l  24 Aug 2021]
+2023-07-12 20:29:42.284  INFO 50964 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-07-12 20:29:42.284  INFO 50964 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.74]
+2023-07-12 20:29:42.349  INFO 50964 --- [restartedMain] o.a.c.c.C.[.[localhost].[/SuperUser]     : Initializing Spring embedded WebApplicationContext
+2023-07-12 20:29:42.349  INFO 50964 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 940 ms
+2023-07-12 20:29:43.199  INFO 50964 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-07-12 20:29:43.203  INFO 50964 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 15 endpoint(s) beneath base path '/actuator'
+2023-07-12 20:29:43.238  INFO 50964 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/SuperUser'
+2023-07-12 20:29:43.249  INFO 50964 --- [restartedMain] c.z.s.s.SuperUserServerApplication       : Started SuperUserServerApplication in 2.198 seconds (JVM running for 4.221)
+2023-07-12 20:29:43.356  WARN 50964 --- [registrationTask1] d.c.b.a.c.r.ApplicationRegistrator       : Failed to register application as Application(name=SuperUserServer, managementUrl=http://172.26.32.1:8080/SuperUser/actuator, healthUrl=http://172.26.32.1:8080/SuperUser/actuator/health, serviceUrl=http://172.26.32.1:8080/SuperUser) at spring-boot-admin ([http://localhost:8880/instances]): 404 : "{"timestamp":"2023-07-12T12:29:43.348+00:00","status":404,"error":"Not Found","message":"No message available","path":"/instances"}". Further attempts are logged on DEBUG level
+2023-07-12 20:29:43.614  INFO 50964 --- [RMI TCP Connection(1)-172.26.32.1] o.a.c.c.C.[.[localhost].[/SuperUser]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-07-12 20:29:43.614  INFO 50964 --- [RMI TCP Connection(1)-172.26.32.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-07-12 20:29:43.615  INFO 50964 --- [RMI TCP Connection(1)-172.26.32.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2023-07-12 20:32:11.320  INFO 50964 --- [http-nio-8080-exec-2] c.z.s.s.controller.DetectController      : send file success!

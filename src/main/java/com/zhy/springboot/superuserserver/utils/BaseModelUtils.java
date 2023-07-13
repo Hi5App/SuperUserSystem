@@ -1,10 +1,14 @@
 package com.zhy.springboot.superuserserver.utils;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.PostMethod;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +20,7 @@ import java.util.Map;
  * @Since version-1.0
  */
 @Slf4j
+@Component
 public class BaseModelUtils {
     /**
      * @Author zhy
@@ -33,8 +38,10 @@ public class BaseModelUtils {
          */
         Missing
     }
+    @Resource
+    private OkHttpUtil okHttpUtil;
 
-    public static void loadModel(ModelType modelType){
+    public void loadModel(ModelType modelType){
         switch(modelType){
             case Missing:{
                 log.info("加载检测Missing的模型...");
@@ -49,7 +56,7 @@ public class BaseModelUtils {
         }
     }
 
-    public static void unloadModel(ModelType modelType){
+    public void unloadModel(ModelType modelType){
         switch(modelType){
             case Missing:{
                 log.info("卸载检测Missing的模型...");
@@ -64,71 +71,34 @@ public class BaseModelUtils {
         }
     }
 
-    public static String detectByModel(ModelType modelType, String url){
+    public JSONArray detectByModel(ModelType modelType, String url, String json){
         switch(modelType){
             case Missing:{
                 log.info("调用检测Missing的模型...");
-                HttpClient httpClient = new HttpClient();
-                PostMethod postMethod = new PostMethod(url);
-
-                postMethod.addRequestHeader("accept", "*/*");
-                //设置Content-Type，根据实际情况确定
-                postMethod.addRequestHeader("Content-Type", "multipart/form-data");
-                //必须设置下面这个Header
-                //添加请求参数
-                // Map paraMap = new HashMap();
-                // paraMap.put("type", "wx");
-                // paraMap.put("mchid", "10101");
-                // postMethod.addParameter("consumerAppId", "test");
-                // postMethod.addParameter("serviceName", "queryMerchantService");
-                // postMethod.addParameter("params", JSON.toJSONString(paraMap));
-                String result = "";
-                try {
-                    int code = httpClient.executeMethod(postMethod);
-                    if (code == 200){
-                        result = postMethod.getResponseBodyAsString();
-                        log.info("detectbyModel_result:" + result);
-                        return result;
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                String result=okHttpUtil.post(url, json);
+                if(result==null){
+                    log.info("调用模型失败！");
+                    return null;
                 }
-
-                break;
+                JSONObject jsonObjectTemp = (JSONObject) JSONObject.parse(result);
+                JSONArray jsonResultArrayTemp = (JSONArray) jsonObjectTemp.get("output");
+                return jsonResultArrayTemp;
             }
             case Crossing:{
                 log.info("调用检测Crossing的模型...");
-                HttpClient httpClient = new HttpClient();
-                PostMethod postMethod = new PostMethod(url);
-
-                postMethod.addRequestHeader("accept", "*/*");
-                //设置Content-Type，根据实际情况确定
-                postMethod.addRequestHeader("Content-Type", "multipart/form-data");
-                //必须设置下面这个Header
-                //添加请求参数
-                // Map paraMap = new HashMap();
-                // paraMap.put("type", "wx");
-                // paraMap.put("mchid", "10101");
-                // postMethod.addParameter("consumerAppId", "test");
-                // postMethod.addParameter("serviceName", "queryMerchantService");
-                // postMethod.addParameter("params", JSON.toJSONString(paraMap));
-                String result = "";
-                try {
-                    int code = httpClient.executeMethod(postMethod);
-                    if (code == 200){
-                        result = postMethod.getResponseBodyAsString();
-                        log.info("detectbyModel_result:" + result);
-                        return result;
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                String result=okHttpUtil.post(url, json);
+                if(result==null){
+                    log.info("调用模型失败！");
+                    return null;
                 }
-                break;
+                JSONObject jsonObjectTemp = (JSONObject) JSONObject.parse(result);
+                JSONArray jsonResultArrayTemp = (JSONArray) jsonObjectTemp.get("output");
+                return jsonResultArrayTemp;
             }
             default:
                 break;
         }
-        return "";
+        return null;
     }
 
 }

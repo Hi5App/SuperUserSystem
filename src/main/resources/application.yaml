@@ -64,11 +64,14 @@ logging:
       max-history: 720
 
 globalconfig:
-  urlForCrossingModel: ""
-  urlForMissingModel: ""
-  mainPath: ""
-  cropImageBin: "${globalconfig.mainPath}/..."
-  dataPath: "${globalconfig.mainPath}/..."
-  tmpDir: "${globalconfig.mainPath}/..."
-  imageDir: "${globalconfig.mainPath}/..."
+  urlForGetBBimage: "http://114.117.165.134:26000/dynamic/image/cropimage"
+  urlForCrossingModel: "http://114.117.165.134:26004/predictions"
+  urlForMissingModel: "http://114.117.165.134:26003/predictions"
+  mainPath: "/home/BraintellServer"
+  cropImageBin: "${globalconfig.mainPath}/vaa3d/cropimage"
+  dataPath: "${globalconfig.mainPath}/data"
+  tmpDir: "${globalconfig.mainPath}/tmp"
+  imageDir: "${globalconfig.mainPath}/image"
+  savePathForPredict: "/home/zhy/tmpDirForPredict"
+  patchSize: [64,64,64]
   cropprocess: 50

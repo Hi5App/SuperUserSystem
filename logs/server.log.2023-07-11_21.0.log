@@ -1,0 +1,25 @@
+2023-07-11 21:48:56.518  INFO 43504 --- [restartedMain] c.z.s.s.SuperUserServerApplication       : Starting SuperUserServerApplication using Java 1.8.0_311 on zhy with PID 43504 (D:\source\JavaProjects\SuperUserServer\target\classes started by zhy in D:\source\JavaProjects\SuperUserServer)
+2023-07-11 21:48:56.520  INFO 43504 --- [restartedMain] c.z.s.s.SuperUserServerApplication       : No active profile set, falling back to 1 default profile: "default"
+2023-07-11 21:48:56.550  INFO 43504 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-07-11 21:48:56.551  INFO 43504 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-07-11 21:48:57.362  INFO 43504 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-07-11 21:48:57.362  INFO 43504 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : Loaded Apache Tomcat Native library [1.2.31] using APR version [1.7.0].
+2023-07-11 21:48:57.362  INFO 43504 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [true].
+2023-07-11 21:48:57.363  INFO 43504 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2023-07-11 21:48:57.365  INFO 43504 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 1.1.1l  24 Aug 2021]
+2023-07-11 21:48:57.372  INFO 43504 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-07-11 21:48:57.372  INFO 43504 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.74]
+2023-07-11 21:48:57.440  INFO 43504 --- [restartedMain] o.a.c.c.C.[.[localhost].[/SuperUser]     : Initializing Spring embedded WebApplicationContext
+2023-07-11 21:48:57.440  INFO 43504 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 889 ms
+2023-07-11 21:48:58.251  INFO 43504 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-07-11 21:48:58.255  INFO 43504 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 15 endpoint(s) beneath base path '/actuator'
+2023-07-11 21:48:58.285  INFO 43504 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/SuperUser'
+2023-07-11 21:48:58.296  INFO 43504 --- [restartedMain] c.z.s.s.SuperUserServerApplication       : Started SuperUserServerApplication in 2.081 seconds (JVM running for 3.933)
+2023-07-11 21:48:58.770  INFO 43504 --- [RMI TCP Connection(2)-172.26.32.1] o.a.c.c.C.[.[localhost].[/SuperUser]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-07-11 21:48:58.770  INFO 43504 --- [RMI TCP Connection(2)-172.26.32.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-07-11 21:48:58.771  INFO 43504 --- [RMI TCP Connection(2)-172.26.32.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2023-07-11 21:49:02.438  WARN 43504 --- [registrationTask1] d.c.b.a.c.r.ApplicationRegistrator       : Failed to register application as Application(name=SuperUserServer, managementUrl=http://172.26.32.1:8080/SuperUser/actuator, healthUrl=http://172.26.32.1:8080/SuperUser/actuator/health, serviceUrl=http://172.26.32.1:8080/SuperUser) at spring-boot-admin ([http://localhost:8880/instances]): I/O error on POST request for "http://localhost:8880/instances": Failed to connect to localhost/0:0:0:0:0:0:0:1:8880; nested exception is java.net.ConnectException: Failed to connect to localhost/0:0:0:0:0:0:0:1:8880. Further attempts are logged on DEBUG level
+2023-07-11 21:49:31.377  INFO 43504 --- [http-nio-8080-exec-1] c.z.s.s.controller.IndexController       : hello
+2023-07-11 21:49:43.344  INFO 43504 --- [http-nio-8080-exec-2] c.z.s.s.controller.IndexController       : hello
+2023-07-11 21:50:53.762  INFO 43504 --- [http-nio-8080-exec-8] c.z.s.s.controller.IndexController       : hello
+2023-07-11 21:53:49.180  INFO 43504 --- [http-nio-8080-exec-10] c.z.s.s.controller.IndexController       : hello

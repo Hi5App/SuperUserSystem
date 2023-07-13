@@ -1,25 +1,21 @@
 package com.zhy.springboot.superuserserver.utils;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.zhy.springboot.superuserserver.config.GlobalConfigs;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.Resource;
 import java.io.*;
+import java.nio.file.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Semaphore;
-
-class XYZ {
-    public float x;
-    public float y;
-    public float z;
-}
-
-class BBox {
-    public XYZ coord1;
-    public XYZ coord2;
-    public String obj;
-    public String res;
-}
 
 /**
  * @Author zhy
@@ -28,12 +24,21 @@ class BBox {
  * @Since version-1.0
  */
 @Slf4j
+@Component
 public class Utils {
     @Autowired
-    private static GlobalConfigs globalConfigs;
-    private static Semaphore semaphore = new Semaphore(globalConfigs.getCropprocess());
+    private GlobalConfigs globalConfigs;
+    private Semaphore semaphore = null;
+    @Resource
+    private OkHttpUtil okHttpUtil;
 
-    public static String consumeInputStream(InputStream is) throws IOException {
+    public void setSemaphore() {
+        if(semaphore==null){
+            semaphore=new Semaphore(globalConfigs.getCropprocess());
+        }
+    }
+
+    public String consumeInputStream(InputStream is) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(is, "utf-8"));
         String s;
         StringBuilder sb = new StringBuilder();
@@ -44,7 +49,9 @@ public class Utils {
         return sb.toString();
     }
 
-    public static String getBBImage(BBox bBox) {
+    public String getBBImage(BBox bBox) {
+        setSemaphore();
+        // Semaphore semaphore = new Semaphore(globalConfigs.getCropprocess());
         String savefilePath = "";
         BufferedReader br = null;
         try {
@@ -89,11 +96,83 @@ public class Utils {
         return savefilePath;
     }
 
-    public static void preProcess() {
+    public void preProcess(String baseDir, String obj, String res, List<XYZ> coors) {
+        log.info("enter preProcess...");
+        for (XYZ coor : coors) {
+            int[] patchSize = globalConfigs.getPatchSize();
+            String xmin = String.format("%06d", (int) coor.x - patchSize[0] / 2);
+            String ymin = String.format("%06d", (int) coor.y - patchSize[0] / 2);
+            String zmin = String.format("%06d", (int) coor.z - patchSize[0] / 2);
+            String xmax = String.format("%06d", (int) coor.x + patchSize[0] / 2);
+            String ymax = String.format("%06d", (int) coor.y + patchSize[0] / 2);
+            String zmax = String.format("%06d", (int) coor.z + patchSize[0] / 2);
+            String fileName = xmin + "_" + ymin + "_" + zmin + "_" + xmax + "_" + ymax + "_" + zmax;
+            String dirPath = String.join(File.separator, baseDir, fileName);
+            File eachDir = new File(dirPath);
+            if(!eachDir.isDirectory()){
+                eachDir.mkdirs();
+            }
 
+            XYZ pa1=new XYZ(coor.x - patchSize[0] / 2, coor.y - patchSize[0] / 2, coor.z - patchSize[0] / 2 );
+            XYZ pa2=new XYZ(coor.x + patchSize[0] / 2, coor.y + patchSize[0] / 2, coor.z + patchSize[0] / 2 );
+            Map<String, Object> bbMap = new HashMap<>();
+            Map<String, Object> userMap= new HashMap<>();
+            Map<String, Object> bBoxMap=new HashMap<>();
+            bbMap.put("obj", obj);
+            bbMap.put("res", res);
+            bbMap.put("pa1", pa1);
+            bbMap.put("pa2", pa2);
+            userMap.put("name", "zackzhy");
+            userMap.put("passwd", "123456");
+            bBoxMap.put("user", userMap);
+            bBoxMap.put("bb", bbMap);
+            JSONObject bBox = new JSONObject(bBoxMap);
+
+            byte[] bytes = okHttpUtil.postForFile(globalConfigs.getUrlForGetBBimage(), JSON.toJSONString(bBox));
+            if (bytes == null) {
+                log.info("preProcess error!");
+                return;
+            }
+            String tifName = "optical.tif";
+            String tifPath = String.join(File.separator,dirPath,tifName);
+            FileOutputStream oStream = null;
+            try {
+                oStream = new FileOutputStream(tifPath);
+                oStream.write(bytes);
+                oStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 
-    public static void postProcess() {
+    public void postProcess(String swcPath, String baseDir) {
+        log.info("enter postProcess...");
+        File swcFile=new File(swcPath);
+        swcFile.delete();
+        File dirPath=new File(baseDir);
+        deleteFile(dirPath);
+     }
 
+    public void deleteFile(File file){
+        //判断文件不为null或文件目录存在
+        if (file == null || !file.exists()){
+            log.info("文件删除失败,请检查文件路径是否正确");
+            return;
+        }
+        //取得这个目录下的所有子文件对象
+        File[] files = file.listFiles();
+        //遍历该目录下的文件对象
+        for (File f: files){
+            //判断子目录是否存在子目录,如果是文件则删除
+            if (f.isDirectory()){
+                deleteFile(f);
+            }else {
+                f.delete();
+            }
+        }
+        //删除空文件夹  for循环已经把上一层节点的目录清空。
+        file.delete();
     }
 }
