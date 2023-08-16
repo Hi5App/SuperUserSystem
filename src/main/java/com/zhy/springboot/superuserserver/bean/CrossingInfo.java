@@ -1,5 +1,6 @@
 package com.zhy.springboot.superuserserver.bean;
 
+import com.zhy.springboot.superuserserver.utils.PointInfo;
 import com.zhy.springboot.superuserserver.utils.XYZ;
 
 import java.util.List;
@@ -13,18 +14,18 @@ import java.util.List;
 public class CrossingInfo {
     // 图像名
     private String obj;
-    //图像最高分辨率
+    // 图像最高分辨率
     private String res;
-    // 中心坐标列表
-    private List<XYZ> coors;
+    // crossing结构相关信息
+    private List<List<PointInfo>> infos;
 
     public CrossingInfo() {
     }
 
-    public CrossingInfo(String obj, List<XYZ> coors, String res) {
+    public CrossingInfo(String obj, String res, List<List<PointInfo>> infos) {
         this.obj = obj;
         this.res = res;
-        this.coors = coors;
+        this.infos = infos;
     }
 
     public String getObj() {
@@ -43,20 +44,20 @@ public class CrossingInfo {
         this.res = res;
     }
 
-    public List<XYZ> getCoors() {
-        return coors;
+    public List<List<PointInfo>> getInfos() {
+        return infos;
     }
 
-    public void setCoors(List<XYZ> coors) {
-        this.coors = coors;
+    public void setInfos(List<List<PointInfo>> infos) {
+        this.infos = infos;
     }
 
     @Override
     public String toString() {
-        return "MissingInfo{" +
+        return "CrossingInfo{" +
                 "obj='" + obj + '\'' +
-                ", coors=" + coors +
-                ", res=" + res +
+                ", res='" + res + '\'' +
+                ", infos=" + infos +
                 '}';
     }
 }

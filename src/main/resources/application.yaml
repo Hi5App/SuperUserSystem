@@ -11,7 +11,7 @@ spring:
   boot:
     admin:
       client:
-        url: http://localhost:8880
+        url: http://localhost:8880/SuperUserAdmin
         instance:
           service-host-type: ip
           metadata:
@@ -24,6 +24,10 @@ spring:
     user:
       name: admin
       password: 123456
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
 
 # management 是所有actuator的配置
 # management.endpoint.端点名.xxxx  对某个端点的具体配置
@@ -64,7 +68,9 @@ logging:
       max-history: 720
 
 globalconfig:
-  urlForGetBBimage: "http://114.117.165.134:26000/dynamic/image/cropimage"
+  urlForGetBBImage: "http://114.117.165.134:26000/dynamic/image/cropimage"
+  urlForGetBBSwc: "http://114.117.165.134:26000/dynamic/swc/cropswc"
+  urlForGetImageList: "http://114.117.165.134:26000/dynamic/image/getimagelist"
   urlForCrossingModel: "http://114.117.165.134:26004/predictions"
   urlForMissingModel: "http://114.117.165.134:26003/predictions"
   mainPath: "/home/BraintellServer"
@@ -73,5 +79,6 @@ globalconfig:
   tmpDir: "${globalconfig.mainPath}/tmp"
   imageDir: "${globalconfig.mainPath}/image"
   savePathForPredict: "/home/zhy/tmpDirForPredict"
-  patchSize: [64,64,64]
+  tipPatchSize: [64,64,64]
+  crossingPatchSize: [32,32,32]
   cropprocess: 50

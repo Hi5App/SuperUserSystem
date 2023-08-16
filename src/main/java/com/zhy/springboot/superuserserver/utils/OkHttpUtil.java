@@ -51,7 +51,7 @@ public class OkHttpUtil {
         return null ;
     }
 
-    public String post(String url, String json) {
+    public String postForJsonString(String url, String json) {
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
                 .url(url)
@@ -72,4 +72,5 @@ public class OkHttpUtil {
         }
         return null ;
     }
+
 }

@@ -75,18 +75,19 @@ public class BaseModelUtils {
         switch(modelType){
             case Missing:{
                 log.info("调用检测Missing的模型...");
-                String result=okHttpUtil.post(url, json);
+                String result=okHttpUtil.postForJsonString(url, json);
                 if(result==null){
                     log.info("调用模型失败！");
                     return null;
                 }
+                System.out.println(result);
                 JSONObject jsonObjectTemp = (JSONObject) JSONObject.parse(result);
                 JSONArray jsonResultArrayTemp = (JSONArray) jsonObjectTemp.get("output");
                 return jsonResultArrayTemp;
             }
             case Crossing:{
                 log.info("调用检测Crossing的模型...");
-                String result=okHttpUtil.post(url, json);
+                String result=okHttpUtil.postForJsonString(url, json);
                 if(result==null){
                     log.info("调用模型失败！");
                     return null;

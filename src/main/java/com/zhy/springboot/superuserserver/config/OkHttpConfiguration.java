@@ -68,8 +68,9 @@ public class OkHttpConfiguration {
                 .sslSocketFactory(sslSocketFactory(), x509TrustManager())
                 .retryOnConnectionFailure(false)//是否开启缓存
                 .connectionPool(pool())//连接池
-                .connectTimeout(10L, TimeUnit.SECONDS)
-                .readTimeout(10L, TimeUnit.SECONDS)
+                .connectTimeout(600L, TimeUnit.SECONDS)
+                .readTimeout(600L, TimeUnit.SECONDS)
+                .writeTimeout(600L, TimeUnit.SECONDS)
                 .build();
     }
 }

@@ -15,7 +15,9 @@ import java.util.concurrent.Semaphore;
 @Component
 @ConfigurationProperties(prefix="globalconfig")
 public class GlobalConfigs {
-    private String urlForGetBBimage;
+    private String urlForGetBBImage;
+    private String urlForGetBBSwc;
+    private String urlForGetImageList;
     private String urlForCrossingModel;
     private String urlForMissingModel;
 
@@ -26,24 +28,52 @@ public class GlobalConfigs {
     private String imageDir;
     private int cropprocess;
     private String savePathForPredict;
-    private int[] patchSize;
+    private int[] tipPatchSize;
+    private int[] crossingPatchSize;
 
-    public String getUrlForGetBBimage() {
-        return urlForGetBBimage;
+    public String getUrlForGetBBImage() {
+        return urlForGetBBImage;
     }
 
-    public void setUrlForGetBBimage(String urlForGetBBimage) {
-        this.urlForGetBBimage = urlForGetBBimage;
+    public void setUrlForGetBBImage(String urlForGetBBimage) {
+        this.urlForGetBBImage = urlForGetBBimage;
     }
 
-    public int[] getPatchSize() {
-        return patchSize;
+    public String getUrlForGetBBSwc() {
+        return urlForGetBBSwc;
     }
 
-    public void setPatchSize(int[] patchSize) {
-        this.patchSize = new int[patchSize.length];
+    public void setUrlForGetBBSwc(String urlForGetBBSwc) {
+        this.urlForGetBBSwc = urlForGetBBSwc;
+    }
+
+    public String getUrlForGetImageList() {
+        return urlForGetImageList;
+    }
+
+    public void setUrlForGetImageList(String urlForGetImageList) {
+        this.urlForGetImageList = urlForGetImageList;
+    }
+
+    public int[] getTipPatchSize() {
+        return tipPatchSize;
+    }
+
+    public void setTipPatchSize(int[] patchSize) {
+        this.tipPatchSize = new int[patchSize.length];
         for(int i=0;i<patchSize.length;i++){
-            this.patchSize[i]=patchSize[i];
+            this.tipPatchSize[i]=patchSize[i];
+        }
+    }
+
+    public int[] getCrossingPatchSize() {
+        return crossingPatchSize;
+    }
+
+    public void setCrossingPatchSize(int[] patchSize) {
+        this.crossingPatchSize = new int[patchSize.length];
+        for(int i=0;i<patchSize.length;i++){
+            this.crossingPatchSize[i]=patchSize[i];
         }
     }
 
@@ -122,7 +152,8 @@ public class GlobalConfigs {
     @Override
     public String toString() {
         return "GlobalConfigs{" +
-                "urlForGetBBimage='" + urlForGetBBimage + '\'' +
+                "urlForGetBBimage='" + urlForGetBBImage + '\'' +
+                ", urlForGetImageList='" + urlForGetImageList + '\'' +
                 ", urlForCrossingModel='" + urlForCrossingModel + '\'' +
                 ", urlForMissingModel='" + urlForMissingModel + '\'' +
                 ", mainPath='" + mainPath + '\'' +
@@ -132,7 +163,7 @@ public class GlobalConfigs {
                 ", imageDir='" + imageDir + '\'' +
                 ", cropprocess=" + cropprocess +
                 ", savePathForPredict='" + savePathForPredict + '\'' +
-                ", patchSize=" + Arrays.toString(patchSize) +
+                ", patchSize=" + Arrays.toString(tipPatchSize) +
                 '}';
     }
 }

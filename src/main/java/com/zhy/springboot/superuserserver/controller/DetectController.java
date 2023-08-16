@@ -6,6 +6,7 @@ import com.zhy.springboot.superuserserver.bean.CrossingInfo;
 import com.zhy.springboot.superuserserver.bean.MissingInfo;
 import com.zhy.springboot.superuserserver.config.GlobalConfigs;
 import com.zhy.springboot.superuserserver.service.DetectService;
+import com.zhy.springboot.superuserserver.utils.PointInfo;
 import com.zhy.springboot.superuserserver.utils.R;
 import com.zhy.springboot.superuserserver.utils.XYZ;
 import lombok.extern.slf4j.Slf4j;
@@ -17,10 +18,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.attribute.PosixFilePermission;
+import java.nio.file.attribute.PosixFilePermissions;
+import java.util.*;
 
 /**
  * @Author zhy
@@ -86,6 +88,12 @@ public class DetectController {
             r.setCode("201");
             return r;
         }
+        Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxrwxrwx");
+        try {
+            Files.setPosixFilePermissions(Paths.get(String.valueOf(swcPath)), perms);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         r.setCode("200");
         r.setMsg("success!");
         log.info("send file success!");
@@ -136,6 +144,12 @@ public class DetectController {
             r.setCode("201");
             return r;
         }
+        Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxrwxrwx");
+        try {
+            Files.setPosixFilePermissions(Paths.get(String.valueOf(swcPath)), perms);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         r.setCode("200");
         r.setMsg("success!");
         log.info("send file success!");
@@ -144,11 +158,12 @@ public class DetectController {
 
 
     @PostMapping(value = {"/crossing"})
-    public R detectCrossing(@RequestBody CrossingInfo info) {
+    public R detectCrossing(@RequestBody CrossingInfo crossingInfo) {
         R r = new R();
-        String obj = info.getObj();
-        String res = info.getRes();
-        List<XYZ> coors = info.getCoors();
+        String obj = crossingInfo.getObj();
+        String res = crossingInfo.getRes();
+        List<List<PointInfo>> infos = crossingInfo.getInfos();
+        System.out.println(crossingInfo);
         File f = new File(swcPathForCrossing);
         if (!f.exists()) {
             log.info("swcfile not exists!");
@@ -158,9 +173,15 @@ public class DetectController {
         }
         String baseDir = swcPathForCrossing.substring(0, swcPathForCrossing.length() - ".ano.eswc".length());
         File dir = new File(baseDir);
+        Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxrwxrwx");
         boolean flag = false;
         if (!dir.exists()) {
             flag = dir.mkdirs();
+            try {
+                Files.setPosixFilePermissions(Paths.get(String.valueOf(dir)), perms);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             if (!flag) {
                 log.info("cannot create dir!");
                 r.setMsg("cannot create dir!");
@@ -169,7 +190,7 @@ public class DetectController {
             }
         }
 
-        JSONArray result = detectService.detectCrossing(swcPathForCrossing, baseDir, obj, res, coors);
+        JSONArray result = detectService.detectCrossing(swcPathForCrossing, baseDir, obj, res, infos);
         if (result == null) {
             log.info("fail to call the model!");
             r.setMsg("fail to call the model!");
@@ -187,10 +208,10 @@ public class DetectController {
             for (String retval : name.split("_")) {
                 allCoors.add(Integer.parseInt(retval));
             }
-            for (int j = 0; j < 3; j++) {
-                rCoors.add((allCoors.get(j) + allCoors.get(j)) / 2);
-            }
-            tmpMap.put("coors", rCoors);
+            // for (int j = 0; j < 3; j++) {
+            //     rCoors.add((allCoors.get(j) + allCoors.get(j+3)) / 2);
+            // }
+            tmpMap.put("coors", allCoors);
             tmpMap.put("y_pred", jsonObject.getInteger("y_pred"));
             list.add(tmpMap);
         }
@@ -202,13 +223,13 @@ public class DetectController {
     }
 
     @PostMapping(value = {"/missing"})
-    public R detectMissing(@RequestBody MissingInfo info) {
+    public R detectMissing(@RequestBody MissingInfo missingInfo) {
         R r = new R();
-        String obj = info.getObj();
-        String res = info.getRes();
-        List<XYZ> coors = info.getCoors();
+        String obj = missingInfo.getObj();
+        String res = missingInfo.getRes();
+        List<XYZ> coors = missingInfo.getCoors();
         // swcPathForMissing="C:\\Users\\10422\\Downloads\\01864_P020_T01-S030_ROL_R0613_RJ-20221021_RJ_02.ano.eswc";
-        System.out.println(info);
+        System.out.println(missingInfo);
         System.out.println(swcPathForMissing);
         File f = new File(swcPathForMissing);
         if (!f.exists()) {
@@ -219,9 +240,15 @@ public class DetectController {
         }
         String baseDir = swcPathForMissing.substring(0, swcPathForMissing.length() - ".ano.eswc".length());
         File dir = new File(baseDir);
+        Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxrwxrwx");
         boolean flag = false;
         if (!dir.exists()) {
             flag = dir.mkdirs();
+            try {
+                Files.setPosixFilePermissions(Paths.get(String.valueOf(dir)), perms);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             if (!flag) {
                 log.info("cannot create dir!");
                 r.setMsg("cannot create dir!");
@@ -248,10 +275,10 @@ public class DetectController {
             for (String retval : name.split("_")) {
                 allCoors.add(Integer.parseInt(retval));
             }
-            for (int j = 0; j < 3; j++) {
-                rCoors.add((allCoors.get(j) + allCoors.get(j)) / 2);
-            }
-            tmpMap.put("coors", rCoors);
+            // for (int j = 0; j < 3; j++) {
+            //     rCoors.add((allCoors.get(j) + allCoors.get(j+3)) / 2);
+            // }
+            tmpMap.put("coors", allCoors);
             tmpMap.put("y_pred", jsonObject.getInteger("y_pred"));
             list.add(tmpMap);
         }
