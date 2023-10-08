@@ -79,6 +79,6 @@ globalconfig:
   tmpDir: "${globalconfig.mainPath}/tmp"
   imageDir: "${globalconfig.mainPath}/image"
   savePathForPredict: "/home/zhy/tmpDirForPredict"
-  tipPatchSize: [64,64,64]
+  tipPatchSize: [32,32,32]
   crossingPatchSize: [32,32,32]
   cropprocess: 50
