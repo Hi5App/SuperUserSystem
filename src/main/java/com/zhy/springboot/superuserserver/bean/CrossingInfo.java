@@ -14,17 +14,14 @@ import java.util.List;
 public class CrossingInfo {
     // 图像名
     private String obj;
-    // 图像最高分辨率
-    private String res;
     // crossing结构相关信息
     private List<List<PointInfo>> infos;
 
     public CrossingInfo() {
     }
 
-    public CrossingInfo(String obj, String res, List<List<PointInfo>> infos) {
+    public CrossingInfo(String obj, List<List<PointInfo>> infos) {
         this.obj = obj;
-        this.res = res;
         this.infos = infos;
     }
 
@@ -34,14 +31,6 @@ public class CrossingInfo {
 
     public void setObj(String obj) {
         this.obj = obj;
-    }
-
-    public String getRes() {
-        return res;
-    }
-
-    public void setRes(String res) {
-        this.res = res;
     }
 
     public List<List<PointInfo>> getInfos() {
@@ -56,7 +45,6 @@ public class CrossingInfo {
     public String toString() {
         return "CrossingInfo{" +
                 "obj='" + obj + '\'' +
-                ", res='" + res + '\'' +
                 ", infos=" + infos +
                 '}';
     }

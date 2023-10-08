@@ -82,3 +82,5 @@ globalconfig:
   tipPatchSize: [32,32,32]
   crossingPatchSize: [32,32,32]
   cropprocess: 50
+  username: zackzhy
+  password: 123456

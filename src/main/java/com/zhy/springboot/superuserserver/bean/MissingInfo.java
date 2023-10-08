@@ -14,8 +14,6 @@ import java.util.List;
 public class MissingInfo {
     // 图像名
     private String obj;
-    // 图像最高分辨率
-    private String res;
     // 中心坐标列表
     private List<XYZ> coors;
     // swc文件
@@ -34,7 +32,6 @@ public class MissingInfo {
 
     public MissingInfo(String obj, List<XYZ> coors, String res) {
         this.obj = obj;
-        this.res = res;
         this.coors = coors;
     }
 
@@ -44,14 +41,6 @@ public class MissingInfo {
 
     public void setObj(String obj) {
         this.obj = obj;
-    }
-
-    public String getRes() {
-        return res;
-    }
-
-    public void setRes(String res) {
-        this.res = res;
     }
 
     public List<XYZ> getCoors() {
@@ -67,7 +56,6 @@ public class MissingInfo {
         return "MissingInfo{" +
                 "obj='" + obj + '\'' +
                 ", coors=" + coors +
-                ", res=" + res +
                 '}';
     }
 }

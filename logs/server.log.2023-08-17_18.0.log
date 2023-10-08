@@ -1,0 +1,21 @@
+2023-08-17 18:58:57.470  INFO 33012 --- [restartedMain] c.z.s.s.SuperUserServerApplication       : Starting SuperUserServerApplication using Java 1.8.0_311 on zhy with PID 33012 (D:\source\JavaProjects\SuperUserServer\target\classes started by zhy in D:\source\JavaProjects\SuperUserServer)
+2023-08-17 18:58:57.470  INFO 33012 --- [restartedMain] c.z.s.s.SuperUserServerApplication       : No active profile set, falling back to 1 default profile: "default"
+2023-08-17 18:58:57.505  INFO 33012 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-08-17 18:58:57.505  INFO 33012 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-08-17 18:58:58.293  INFO 33012 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-08-17 18:58:58.293  INFO 33012 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : Loaded Apache Tomcat Native library [1.2.31] using APR version [1.7.0].
+2023-08-17 18:58:58.293  INFO 33012 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [true].
+2023-08-17 18:58:58.293  INFO 33012 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2023-08-17 18:58:58.293  INFO 33012 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 1.1.1l  24 Aug 2021]
+2023-08-17 18:58:58.298  INFO 33012 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-08-17 18:58:58.298  INFO 33012 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.74]
+2023-08-17 18:58:58.363  INFO 33012 --- [restartedMain] o.a.c.c.C.[.[localhost].[/SuperUser]     : Initializing Spring embedded WebApplicationContext
+2023-08-17 18:58:58.363  INFO 33012 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 858 ms
+2023-08-17 18:58:59.217  WARN 33012 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : Unable to start LiveReload server
+2023-08-17 18:58:59.227  INFO 33012 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 15 endpoint(s) beneath base path '/actuator'
+2023-08-17 18:58:59.260  INFO 33012 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/SuperUser'
+2023-08-17 18:58:59.267  INFO 33012 --- [restartedMain] c.z.s.s.SuperUserServerApplication       : Started SuperUserServerApplication in 2.114 seconds (JVM running for 3.947)
+2023-08-17 18:58:59.756  INFO 33012 --- [registrationTask1] d.c.b.a.c.r.ApplicationRegistrator       : Application registered itself as e87b93533f5a
+2023-08-17 18:58:59.838  INFO 33012 --- [http-nio-8080-exec-1] o.a.c.c.C.[.[localhost].[/SuperUser]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-08-17 18:58:59.838  INFO 33012 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-08-17 18:58:59.840  INFO 33012 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms

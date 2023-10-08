@@ -22,6 +22,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.attribute.PosixFilePermission;
 import java.nio.file.attribute.PosixFilePermissions;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -41,18 +43,64 @@ public class DetectController {
     private GlobalConfigs globalConfigs;
 
     private String swcPathForMissing;
+    private String baseDirPathForMissing;
 
     private String swcPathForCrossing;
+    private String baseDirPathForCrossing;
 
     @PostMapping(value = {"/file/for-missing"})
     public R getSwcFileForMissing(MultipartFile swcFile) {
         R r = new R();
         String swcPath = "";
-
+        Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxrwxrwx");
         if (swcFile != null && !swcFile.isEmpty()) {
             try {
                 String swcName = swcFile.getOriginalFilename();
-                swcPath = String.join(File.separator, globalConfigs.getSavePathForPredict(), "tip", swcName);
+                String baseDir="";
+                if(swcName!=null){
+                    baseDir = String.join(File.separator, globalConfigs.getSavePathForPredict(), "tip", swcName.substring(0, swcName.length()-".ano.eswc".length()));
+                }
+                else{
+                    log.info("swcfile not exists!");
+                    r.setMsg("swcfile not exists!");
+                    r.setCode("201");
+                    return r;
+                }
+                File dir = new File(baseDir);
+                boolean flag = false;
+                if (!dir.exists()) {
+                    flag = dir.mkdirs();
+                    try {
+                        Files.setPosixFilePermissions(Paths.get(String.valueOf(dir)), perms);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    if (!flag) {
+                        log.info("cannot create dir!");
+                        r.setMsg("cannot create dir!");
+                        r.setCode("203");
+                        return r;
+                    }
+                }
+
+                LocalDateTime currentTime = LocalDateTime.now();
+                // 定义日期时间格式化器
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
+                // 将当前时间按照指定格式转换为字符串
+                String formattedDate = currentTime.format(formatter);
+                String timeDirPath=String.join(File.separator, baseDir, formattedDate);
+                File timeDir=new File(timeDirPath);
+                if (!timeDir.exists()) {
+                    timeDir.mkdirs();
+                    try {
+                        Files.setPosixFilePermissions(Paths.get(String.valueOf(timeDir)), perms);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                baseDirPathForMissing=timeDirPath;
+
+                swcPath = String.join(File.separator, timeDirPath, swcName);
                 swcPathForMissing = swcPath;
                 InputStream inputStream = null;
                 FileOutputStream outputStream = null;
@@ -88,9 +136,8 @@ public class DetectController {
             r.setCode("201");
             return r;
         }
-        Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxrwxrwx");
         try {
-            Files.setPosixFilePermissions(Paths.get(String.valueOf(swcPath)), perms);
+            Files.setPosixFilePermissions(Paths.get(swcPath), perms);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -104,11 +151,55 @@ public class DetectController {
     public R getSwcFileForCrossing(MultipartFile swcFile) {
         R r = new R();
         String swcPath = "";
-
+        Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxrwxrwx");
         if (swcFile != null && !swcFile.isEmpty()) {
             try {
                 String swcName = swcFile.getOriginalFilename();
-                swcPath = String.join(File.separator, globalConfigs.getSavePathForPredict(), "crossing", swcName);
+                String baseDir="";
+                if(swcName!=null){
+                    baseDir = String.join(File.separator, globalConfigs.getSavePathForPredict(), "crossing", swcName.substring(0, swcName.length()-".ano.eswc".length()));
+                }
+                else{
+                    log.info("swcfile not exists!");
+                    r.setMsg("swcfile not exists!");
+                    r.setCode("201");
+                    return r;
+                }
+                File dir = new File(baseDir);
+                boolean flag = false;
+                if (!dir.exists()) {
+                    flag = dir.mkdirs();
+                    try {
+                        Files.setPosixFilePermissions(Paths.get(String.valueOf(dir)), perms);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    if (!flag) {
+                        log.info("cannot create dir!");
+                        r.setMsg("cannot create dir!");
+                        r.setCode("203");
+                        return r;
+                    }
+                }
+
+                LocalDateTime currentTime = LocalDateTime.now();
+                // 定义日期时间格式化器
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
+                // 将当前时间按照指定格式转换为字符串
+                String formattedDate = currentTime.format(formatter);
+                String timeDirPath=String.join(File.separator, baseDir, formattedDate);
+                File timeDir=new File(timeDirPath);
+                if (!timeDir.exists()) {
+                    timeDir.mkdirs();
+                    try {
+                        Files.setPosixFilePermissions(Paths.get(String.valueOf(timeDir)), perms);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                baseDirPathForCrossing=timeDirPath;
+
+                swcPath = String.join(File.separator, timeDirPath, swcName);
                 swcPathForCrossing = swcPath;
                 InputStream inputStream = null;
                 FileOutputStream outputStream = null;
@@ -144,9 +235,8 @@ public class DetectController {
             r.setCode("201");
             return r;
         }
-        Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxrwxrwx");
         try {
-            Files.setPosixFilePermissions(Paths.get(String.valueOf(swcPath)), perms);
+            Files.setPosixFilePermissions(Paths.get(swcPath), perms);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -161,7 +251,6 @@ public class DetectController {
     public R detectCrossing(@RequestBody CrossingInfo crossingInfo) {
         R r = new R();
         String obj = crossingInfo.getObj();
-        String res = crossingInfo.getRes();
         List<List<PointInfo>> infos = crossingInfo.getInfos();
         System.out.println(crossingInfo);
         File f = new File(swcPathForCrossing);
@@ -171,26 +260,8 @@ public class DetectController {
             r.setCode("201");
             return r;
         }
-        String baseDir = swcPathForCrossing.substring(0, swcPathForCrossing.length() - ".ano.eswc".length());
-        File dir = new File(baseDir);
-        Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxrwxrwx");
-        boolean flag = false;
-        if (!dir.exists()) {
-            flag = dir.mkdirs();
-            try {
-                Files.setPosixFilePermissions(Paths.get(String.valueOf(dir)), perms);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if (!flag) {
-                log.info("cannot create dir!");
-                r.setMsg("cannot create dir!");
-                r.setCode("203");
-                return r;
-            }
-        }
 
-        JSONArray result = detectService.detectCrossing(swcPathForCrossing, baseDir, obj, res, infos);
+        JSONArray result = detectService.detectCrossing(swcPathForCrossing, baseDirPathForCrossing, obj, infos);
         if (result == null) {
             log.info("fail to call the model!");
             r.setMsg("fail to call the model!");
@@ -226,7 +297,6 @@ public class DetectController {
     public R detectMissing(@RequestBody MissingInfo missingInfo) {
         R r = new R();
         String obj = missingInfo.getObj();
-        String res = missingInfo.getRes();
         List<XYZ> coors = missingInfo.getCoors();
         // swcPathForMissing="C:\\Users\\10422\\Downloads\\01864_P020_T01-S030_ROL_R0613_RJ-20221021_RJ_02.ano.eswc";
         System.out.println(missingInfo);
@@ -238,26 +308,8 @@ public class DetectController {
             r.setCode("201");
             return r;
         }
-        String baseDir = swcPathForMissing.substring(0, swcPathForMissing.length() - ".ano.eswc".length());
-        File dir = new File(baseDir);
-        Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxrwxrwx");
-        boolean flag = false;
-        if (!dir.exists()) {
-            flag = dir.mkdirs();
-            try {
-                Files.setPosixFilePermissions(Paths.get(String.valueOf(dir)), perms);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if (!flag) {
-                log.info("cannot create dir!");
-                r.setMsg("cannot create dir!");
-                r.setCode("203");
-                return r;
-            }
-        }
 
-        JSONArray result = detectService.detectMissing(swcPathForMissing, baseDir, obj, res, coors);
+        JSONArray result = detectService.detectMissing(swcPathForMissing, baseDirPathForMissing, obj, coors);
         if (result == null) {
             log.info("fail to call the model!");
             r.setMsg("fail to call the model!");
