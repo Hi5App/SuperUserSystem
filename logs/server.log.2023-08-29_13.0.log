@@ -1,8 +1,8 @@
-2023-10-30 22:10:56.056  INFO 71820 --- [main] c.z.s.s.SuperUserServerApplicationTests  : Starting SuperUserServerApplicationTests using Java 1.8.0_311 on zhy with PID 71820 (started by zhy in D:\source\JavaProjects\SuperUserServer)
-2023-10-30 22:10:56.058  INFO 71820 --- [main] c.z.s.s.SuperUserServerApplicationTests  : No active profile set, falling back to 1 default profile: "default"
-2023-10-30 22:10:58.588  INFO 71820 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 15 endpoint(s) beneath base path '/actuator'
-2023-10-30 22:10:58.637  INFO 71820 --- [main] c.z.s.s.SuperUserServerApplicationTests  : Started SuperUserServerApplicationTests in 2.868 seconds (JVM running for 3.566)
-2023-10-30 22:10:58.668 ERROR 71820 --- [registrationTask1] o.s.s.s.TaskUtils$LoggingErrorHandler    : Unexpected error occurred in scheduled task
+2023-08-29 13:04:22.557  INFO 13760 --- [main] c.z.s.s.SuperUserServerApplicationTests  : Starting SuperUserServerApplicationTests using Java 1.8.0_311 on zhy with PID 13760 (started by zhy in D:\source\JavaProjects\SuperUserServer)
+2023-08-29 13:04:22.559  INFO 13760 --- [main] c.z.s.s.SuperUserServerApplicationTests  : No active profile set, falling back to 1 default profile: "default"
+2023-08-29 13:04:25.446  INFO 13760 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 15 endpoint(s) beneath base path '/actuator'
+2023-08-29 13:04:25.506  INFO 13760 --- [main] c.z.s.s.SuperUserServerApplicationTests  : Started SuperUserServerApplicationTests in 3.26 seconds (JVM running for 4.06)
+2023-08-29 13:04:25.552 ERROR 13760 --- [registrationTask1] o.s.s.s.TaskUtils$LoggingErrorHandler    : Unexpected error occurred in scheduled task
 
 java.lang.IllegalStateException: couldn't determine local port. Please set spring.boot.admin.client.instance.service-base-url.
 	at de.codecentric.boot.admin.client.registration.DefaultApplicationFactory.getLocalServerPort(DefaultApplicationFactory.java:192) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]

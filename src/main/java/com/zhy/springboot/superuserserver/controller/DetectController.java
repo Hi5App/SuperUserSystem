@@ -8,6 +8,7 @@ import com.zhy.springboot.superuserserver.config.GlobalConfigs;
 import com.zhy.springboot.superuserserver.service.DetectService;
 import com.zhy.springboot.superuserserver.utils.PointInfo;
 import com.zhy.springboot.superuserserver.utils.R;
+import com.zhy.springboot.superuserserver.utils.Utils;
 import com.zhy.springboot.superuserserver.utils.XYZ;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,9 @@ import java.util.*;
 public class DetectController {
     @Autowired
     DetectService detectService;
+
+    @Autowired
+    public Utils utils;
 
     @Autowired
     private GlobalConfigs globalConfigs;
@@ -268,16 +272,23 @@ public class DetectController {
             r.setCode("204");
             return r;
         }
+
+        List<XYZ> resList = utils.getResMap().get(obj);
         List<Map<String, Object>> list = new ArrayList<>();
         int size = result.size();
         for (int i = 0; i < size; i++) {
             Map<String, Object> tmpMap = new HashMap<>(4);
             JSONObject jsonObject = result.getJSONObject(i);
             List<Integer> allCoors = new ArrayList<>();
-            List<Integer> rCoors = new ArrayList<>();
             String name = jsonObject.getString("name");
-            for (String retval : name.split("_")) {
-                allCoors.add(Integer.parseInt(retval));
+            String[] retvals = name.split("_");
+            for (int j=0; j<retvals.length; j=j+3) {
+                XYZ convertedRetvals = utils.convertCurRes2MaxResCoords(resList.get(0), resList.get(1),
+                        Integer.parseInt(retvals[j]), Integer.parseInt(retvals[j+1]), Integer.parseInt(retvals[j+2]));
+
+                allCoors.add((int)convertedRetvals.x);
+                allCoors.add((int)convertedRetvals.y);
+                allCoors.add((int)convertedRetvals.z);
             }
             // for (int j = 0; j < 3; j++) {
             //     rCoors.add((allCoors.get(j) + allCoors.get(j+3)) / 2);
@@ -316,16 +327,23 @@ public class DetectController {
             r.setCode("204");
             return r;
         }
+
+        List<XYZ> resList = utils.getResMap().get(obj);
         List<Map<String, Object>> list = new ArrayList<>();
         int size = result.size();
         for (int i = 0; i < size; i++) {
             Map<String, Object> tmpMap = new HashMap<>(4);
             JSONObject jsonObject = result.getJSONObject(i);
             List<Integer> allCoors = new ArrayList<>();
-            List<Integer> rCoors = new ArrayList<>();
             String name = jsonObject.getString("name");
-            for (String retval : name.split("_")) {
-                allCoors.add(Integer.parseInt(retval));
+            String[] retvals = name.split("_");
+            for (int j=0; j<retvals.length; j=j+3) {
+                XYZ convertedRetvals = utils.convertCurRes2MaxResCoords(resList.get(0), resList.get(1),
+                        Integer.parseInt(retvals[j]), Integer.parseInt(retvals[j+1]), Integer.parseInt(retvals[j+2]));
+
+                allCoors.add((int)convertedRetvals.x);
+                allCoors.add((int)convertedRetvals.y);
+                allCoors.add((int)convertedRetvals.z);
             }
             // for (int j = 0; j < 3; j++) {
             //     rCoors.add((allCoors.get(j) + allCoors.get(j+3)) / 2);

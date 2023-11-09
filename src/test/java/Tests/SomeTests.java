@@ -22,4 +22,9 @@ public class SomeTests {
         String resForCropSwc=String.join(File.separator, "/test", "00029");
         System.out.println(resForCropSwc);
     }
+
+    @Test
+    void testResXYZ2String(){
+
+    }
 }

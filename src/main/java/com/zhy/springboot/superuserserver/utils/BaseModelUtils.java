@@ -52,35 +52,9 @@ public abstract class BaseModelUtils {
     @Autowired
     public Utils utils;
 
-    public void loadModel() {
-        switch (modelType) {
-            case Missing: {
-                log.info("加载检测Missing的模型...");
-                break;
-            }
-            case Crossing: {
-                log.info("加载检测Crossing的模型...");
-                break;
-            }
-            default:
-                break;
-        }
-    }
+    public abstract void loadModel() ;
 
-    public void unloadModel() {
-        switch (modelType) {
-            case Missing: {
-                log.info("卸载检测Missing的模型...");
-                break;
-            }
-            case Crossing: {
-                log.info("卸载检测Crossing的模型...");
-                break;
-            }
-            default:
-                break;
-        }
-    }
+    public abstract void unloadModel() ;
 
     public JSONArray detectByModel(String url, String json) {
         String result = okHttpUtil.postForJsonString(url, json);
@@ -90,8 +64,8 @@ public abstract class BaseModelUtils {
         }
         System.out.println(result);
         JSONObject jsonObjectTemp = (JSONObject) JSONObject.parse(result);
-        return null;
-        // return (JSONArray) jsonObjectTemp.get("output");
+        // return null;
+        return (JSONArray) jsonObjectTemp.get("output");
     }
 
 }

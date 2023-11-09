@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.io.*;
 import java.nio.file.*;
+import java.nio.file.attribute.PosixFilePermission;
+import java.nio.file.attribute.PosixFilePermissions;
 import java.text.DecimalFormat;
 import java.util.*;
 import java.util.concurrent.Semaphore;
@@ -31,6 +33,12 @@ public class Utils {
     private Semaphore semaphore = null;
     @Resource
     private OkHttpUtil okHttpUtil;
+
+    private Map<String, List<XYZ>> resMap = new HashMap<>();
+
+    public Map<String, List<XYZ>> getResMap() {
+        return resMap;
+    }
 
     public void setSemaphore() {
         if (semaphore == null) {
@@ -104,6 +112,33 @@ public class Utils {
         }
     }
 
+    public void copySwcFile2AnotherPath(String obj, String swcPath, String swcName){
+        //生成Image文件夹
+        String newSwcDir = String.join(File.separator,"/TeraConvertedBrain/data/arbor/test", obj);
+        Path newSwcDirPath = Paths.get(newSwcDir);
+        if(!Files.exists(newSwcDirPath)){
+            try {
+                Files.createDirectories(newSwcDirPath);
+                Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxrwxrwx");
+                Files.setPosixFilePermissions(newSwcDirPath, perms);
+            } catch (IOException e) {
+                e.printStackTrace();
+                log.info("创建目录失败!");
+            }
+        }
+
+        //复制一份swc文件
+        String newSwcPath=String.join(File.separator,"/TeraConvertedBrain/data/arbor/test", obj, swcName);
+        Path sourcePath = Paths.get(swcPath);
+        Path targetPath = Paths.get(newSwcPath);
+        try {
+            Files.copy(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            e.printStackTrace();
+            log.info("复制文件失败!");
+        }
+    }
+
     public void deleteFile(File file) {
         //判断文件不为null或文件目录存在
         if (file == null || !file.exists()) {
@@ -170,11 +205,13 @@ public class Utils {
         String maxRes = jsonResultArrayTemp.getString(0);
 
         List<String> resStrings = new ArrayList<>();
+        resStrings.add(maxRes);
         resStrings.add(subMaxRes);
+
         return resStrings;
     }
 
-    public List<XYZ> transResStrng2XYZ(List<String> resStrings) {
+    public List<XYZ> transResString2XYZ(List<String> resStrings) {
         String patternString = "RES\\((\\d+)x(\\d+)x(\\d+)\\)";
         XYZ ImageMaxRes = new XYZ();
         Pattern pattern = Pattern.compile(patternString);
@@ -198,10 +235,17 @@ public class Utils {
         List<XYZ> resList = new ArrayList<>();
         resList.add(ImageMaxRes);
         resList.add(ImageCurRes);
+
         return resList;
     }
 
-    public void getCroppedImage(XYZ pa1, XYZ pa2, String obj, String res, String username, String password){
+    public String transResXYZ2String(XYZ resXYZ) {
+        return String.format("RES(%dx%dx%d)", (int)resXYZ.y, (int)resXYZ.x, (int)resXYZ.z);
+    }
+
+    public void getCroppedImage(XYZ pa1, XYZ pa2, String dirPath, String obj, XYZ res, String username, String password){
+        String resString = transResXYZ2String(res);
+
         Map<String, Object> userMap = new HashMap<>();
         userMap.put("name", username);
         userMap.put("passwd", password);
@@ -209,28 +253,28 @@ public class Utils {
         Map<String, Object> bbMap = new HashMap<>();
         Map<String, Object> bBoxMap = new HashMap<>();
         bbMap.put("obj", obj);
-        bbMap.put("res", res);
+        bbMap.put("res", resString);
         bbMap.put("pa1", pa1);
         bbMap.put("pa2", pa2);
         bBoxMap.put("user", userMap);
         bBoxMap.put("bb", bbMap);
         JSONObject bBox = new JSONObject(bBoxMap);
 
-        // byte[] bytes = okHttpUtil.postForFile(globalConfigs.getUrlForGetBBImage(), JSON.toJSONString(bBox));
-        // if (bytes == null) {
-        //     log.info("get cropimage error!");
-        //     return null;
-        // }
-        // String tifName = "optical.v3dpbd";
-        // String tifPath = String.join(File.separator,dirPath,tifName);
-        // FileOutputStream oStream = null;
-        // try {
-        //     oStream = new FileOutputStream(tifPath);
-        //     oStream.write(bytes);
-        //     oStream.close();
-        // } catch (IOException e) {
-        //     e.printStackTrace();
-        // }
+        byte[] bytes = okHttpUtil.postForFile(globalConfigs.getUrlForGetBBImage(), JSON.toJSONString(bBox));
+        if (bytes == null) {
+            log.info("get cropimage error!");
+            return ;
+        }
+        String tifName = "optical.v3dpbd";
+        String tifPath = String.join(File.separator,dirPath,tifName);
+        FileOutputStream oStream = null;
+        try {
+            oStream = new FileOutputStream(tifPath);
+            oStream.write(bytes);
+            oStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void getCroppedSwc(XYZ pa1, XYZ pa2, String swcName, String resForCropSwc, String username, String password, String dirPath){
@@ -305,7 +349,7 @@ public class Utils {
         return new XYZ(x, y, z);
     }
 
-    public void convertCoorsInSWC(String swcPath, XYZ ImageMaxRes, XYZ ImageCurRes) {
+    public void convertCoorsInSwc(String swcPath, XYZ ImageMaxRes, XYZ ImageCurRes) {
         List<String> lines = null;
         Path path = null;
         try {
@@ -334,6 +378,13 @@ public class Utils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public XYZ convertCurRes2MaxResCoords(XYZ ImageMaxRes, XYZ ImageCurRes, float x, float y, float z) {
+        x *= (ImageMaxRes.x / ImageCurRes.x);
+        y *= (ImageMaxRes.y / ImageCurRes.y);
+        z *= (ImageMaxRes.z / ImageCurRes.z);
+        return new XYZ(x, y, z);
     }
 
 

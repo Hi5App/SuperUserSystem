@@ -10,7 +10,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.PosixFilePermission;
 import java.nio.file.attribute.PosixFilePermissions;
 import java.util.HashMap;
@@ -27,7 +29,17 @@ import java.util.Set;
 @Slf4j
 @Component
 public class CrossingModelUtils extends BaseModelUtils{
-    private final ModelType modelType = BaseModelUtils.ModelType.Crossing;
+    public ModelType modelType = ModelType.Crossing;
+
+    @Override
+    public void loadModel() {
+        log.info("load the crossing model...");
+    }
+
+    @Override
+    public void unloadModel() {
+        log.info("unload the crossing model...");
+    }
 
     @Override
     public JSONArray detectByModel(String url, String json) {
@@ -42,13 +54,20 @@ public class CrossingModelUtils extends BaseModelUtils{
         String password = globalConfigs.getPassword();
 
         //get res
-        List<String> maxResAndSubMaxRes = utils.getMaxResAndSubMaxRes(obj, username, password);
-        List<XYZ> resList = utils.transResStrng2XYZ(maxResAndSubMaxRes);
+        List<XYZ> resList = null;
+        if(utils.getResMap().containsKey(obj)){
+            resList = utils.getResMap().get(obj);
+        }else{
+            List<String> maxResAndSubMaxRes = utils.getMaxResAndSubMaxRes(obj, username, password);
+            resList = utils.transResString2XYZ(maxResAndSubMaxRes);
+            utils.getResMap().put(obj, resList);
+        }
+
         XYZ imageMaxRes = resList.get(0);
         XYZ imageCurRes = resList.get(1);
 
         //swc坐标变换
-        utils.convertCoorsInSWC(swcPath, imageMaxRes, imageCurRes);
+        utils.convertCoorsInSwc(swcPath, imageMaxRes, imageCurRes);
 
         //获取切割swc所需参数
         File swcFile = new File(swcPath);
@@ -59,15 +78,7 @@ public class CrossingModelUtils extends BaseModelUtils{
         }
         String resForCropSwc = String.join(File.separator, "/test", obj);
 
-        // //复制一份swc文件
-        // String newSwcPath=String.join(File.separator,"/TeraConvertedBrain/data/arbor/test", obj, swcFile.getName());
-        // Path sourcePath = Paths.get(swcPath);
-        // Path targetPath = Paths.get(newSwcPath);
-        // try {
-        //     Files.copy(sourcePath, targetPath);
-        // } catch (IOException e) {
-        //     e.printStackTrace();
-        // }
+        utils.copySwcFile2AnotherPath(obj, swcPath, swcFile.getName());
 
         for (XYZ coor : coors) {
             // String xmin = String.format("%06d", (int) coor.x - patchSize[0] / 2);
@@ -76,7 +87,10 @@ public class CrossingModelUtils extends BaseModelUtils{
             // String xmax = String.format("%06d", (int) coor.x + patchSize[0] / 2);
             // String ymax = String.format("%06d", (int) coor.y + patchSize[0] / 2);
             // String zmax = String.format("%06d", (int) coor.z + patchSize[0] / 2);
-            String fileName = (int) coor.x + "_" + (int) coor.y + "_" + (int) coor.z;
+            //坐标转换
+            XYZ convertedCoor = utils.convertMaxRes2CurrResCoords(imageMaxRes, imageCurRes, coor.x, coor.y, coor.z);
+
+            String fileName = (int) convertedCoor.x + "_" + (int) convertedCoor.y + "_" + (int) convertedCoor.z;
             String dirPath = String.join(File.separator, baseDir, fileName);
             Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxrwxrwx");
             File eachDir = new File(dirPath);
@@ -95,13 +109,10 @@ public class CrossingModelUtils extends BaseModelUtils{
                 }
             }
 
-            //坐标转换
-            XYZ convertedCoor = utils.convertMaxRes2CurrResCoords(imageMaxRes, imageCurRes, coor.x, coor.y, coor.z);
-
             // 获取图像块
             XYZ pa1 = new XYZ((int) convertedCoor.x - patchSize[0] / 2, (int) convertedCoor.y - patchSize[0] / 2, (int) convertedCoor.z - patchSize[0] / 2);
             XYZ pa2 = new XYZ((int) convertedCoor.x + patchSize[0] / 2, (int) convertedCoor.y + patchSize[0] / 2, (int) convertedCoor.z + patchSize[0] / 2);
-            utils.getCroppedImage(pa1, pa2, obj, maxResAndSubMaxRes.get(1), username, password);
+            utils.getCroppedImage(pa1, pa2, obj, dirPath, imageCurRes, username, password);
 
             //获取切割后的swc
             utils.getCroppedSwc(pa1, pa2, swcName, resForCropSwc, username, password, dirPath);

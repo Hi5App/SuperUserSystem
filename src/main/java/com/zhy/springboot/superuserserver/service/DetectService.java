@@ -32,7 +32,7 @@ public class DetectService {
     MissingModelUtils missingModelUtils;
 
     @Autowired
-    MissingModelUtils crossingModelUtils;
+    CrossingModelUtils crossingModelUtils;
 
     public JSONArray detectMissing(String swcPath, String baseDir, String obj, List<XYZ> coors) {
         log.info("enter detectMissing...");
@@ -73,18 +73,12 @@ public class DetectService {
     }
 
     public String handleInputForMissing(String swcPath, String baseDir, String obj) {
-        //get res
-        String username = globalConfigs.getUsername();
-        String password = globalConfigs.getPassword();
-        List<String> maxResAndSubMaxRes = utils.getMaxResAndSubMaxRes(obj, username, password);
-        List<XYZ> resList = utils.transResStrng2XYZ(maxResAndSubMaxRes);
-
         Map<String, Object> mapStr = new HashMap<String, Object>();
         mapStr.put("swc_path", swcPath);
         mapStr.put("input_path", baseDir);
-        mapStr.put("x_ratio", resList.get(0).x / resList.get(1).x);
-        mapStr.put("y_ratio", resList.get(0).y / resList.get(1).y);
-        mapStr.put("z_ratio", resList.get(0).z / resList.get(1).z);
+        // mapStr.put("x_ratio", resList.get(0).x / resList.get(1).x);
+        // mapStr.put("y_ratio", resList.get(0).y / resList.get(1).y);
+        // mapStr.put("z_ratio", resList.get(0).z / resList.get(1).z);
         Map<String, Object> inputMap = new HashMap<String, Object>();
         inputMap.put("input", mapStr);
         return JSON.toJSONString(inputMap);
@@ -94,8 +88,15 @@ public class DetectService {
         //get res
         String username = globalConfigs.getUsername();
         String password = globalConfigs.getPassword();
-        List<String> maxResAndSubMaxRes = utils.getMaxResAndSubMaxRes(obj, username, password);
-        List<XYZ> resList = utils.transResStrng2XYZ(maxResAndSubMaxRes);
+
+        List<XYZ> resList = null;
+        if(utils.getResMap().containsKey(obj)){
+            resList = utils.getResMap().get(obj);
+        }else{
+            List<String> maxResAndSubMaxRes = utils.getMaxResAndSubMaxRes(obj, username, password);
+            resList = utils.transResString2XYZ(maxResAndSubMaxRes);
+            utils.getResMap().put(obj, resList);
+        }
 
         for (List<PointInfo> info : infos) {
             for (PointInfo tempPointInfo : info) {
