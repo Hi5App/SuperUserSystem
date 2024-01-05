@@ -2,6 +2,7 @@ package com.zhy.springboot.superuserserver.bean;
 
 import com.zhy.springboot.superuserserver.utils.PointInfo;
 import com.zhy.springboot.superuserserver.utils.XYZ;
+import lombok.Getter;
 
 import java.util.List;
 
@@ -11,34 +12,34 @@ import java.util.List;
  * @Description This is description of class
  * @Since version-1.0
  */
+@Getter
 public class CrossingInfo {
     // 图像名
     private String obj;
     // crossing结构相关信息
     private List<List<PointInfo>> infos;
+    // swcNameWithNoSuffix作为标识
+    private String swcNameWithNoSuffix;
 
     public CrossingInfo() {
     }
 
-    public CrossingInfo(String obj, List<List<PointInfo>> infos) {
+    public CrossingInfo(String obj, List<List<PointInfo>> infos, String swcNameWithNoSuffix) {
         this.obj = obj;
         this.infos = infos;
-    }
-
-    public String getObj() {
-        return obj;
+        this.swcNameWithNoSuffix = swcNameWithNoSuffix;
     }
 
     public void setObj(String obj) {
         this.obj = obj;
     }
 
-    public List<List<PointInfo>> getInfos() {
-        return infos;
-    }
-
     public void setInfos(List<List<PointInfo>> infos) {
         this.infos = infos;
+    }
+
+    public void setswcNameWithNoSuffix(String swcNameWithNoSuffix) {
+        this.swcNameWithNoSuffix = swcNameWithNoSuffix;
     }
 
     @Override
@@ -46,6 +47,7 @@ public class CrossingInfo {
         return "CrossingInfo{" +
                 "obj='" + obj + '\'' +
                 ", infos=" + infos +
+                ", swcNameWithNoSuffix='" + swcNameWithNoSuffix + '\'' +
                 '}';
     }
 }

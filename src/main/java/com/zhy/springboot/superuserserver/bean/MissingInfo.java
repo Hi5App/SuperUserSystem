@@ -1,6 +1,7 @@
 package com.zhy.springboot.superuserserver.bean;
 
 import com.zhy.springboot.superuserserver.utils.XYZ;
+import lombok.Getter;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -11,11 +12,14 @@ import java.util.List;
  * @Description This is description of class
  * @Since version-1.0
  */
+@Getter
 public class MissingInfo {
     // 图像名
     private String obj;
     // 中心坐标列表
     private List<XYZ> coors;
+    // swcNameWithNoSuffix 作为标识
+    private String swcNameWithNoSuffix;
     // swc文件
     // private MultipartFile swcFile;
 
@@ -30,25 +34,22 @@ public class MissingInfo {
     public MissingInfo() {
     }
 
-    public MissingInfo(String obj, List<XYZ> coors, String res) {
+    public MissingInfo(String obj, List<XYZ> coors, String swcNameWithNoSuffix) {
         this.obj = obj;
         this.coors = coors;
-    }
-
-    public String getObj() {
-        return obj;
+        this.swcNameWithNoSuffix = swcNameWithNoSuffix;
     }
 
     public void setObj(String obj) {
         this.obj = obj;
     }
 
-    public List<XYZ> getCoors() {
-        return coors;
-    }
-
     public void setCoors(List<XYZ> coors) {
         this.coors = coors;
+    }
+
+    public void setswcNameWithNoSuffix(String swcNameWithNoSuffix) {
+        this.swcNameWithNoSuffix = swcNameWithNoSuffix;
     }
 
     @Override
@@ -56,6 +57,7 @@ public class MissingInfo {
         return "MissingInfo{" +
                 "obj='" + obj + '\'' +
                 ", coors=" + coors +
+                ", swcNameWithNoSuffix='" + swcNameWithNoSuffix + '\'' +
                 '}';
     }
 }

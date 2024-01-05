@@ -53,16 +53,15 @@ public abstract class BaseModelUtils {
     public Utils utils;
 
     public abstract void loadModel() ;
-
     public abstract void unloadModel() ;
-
+    public abstract void preProcess(TaskInfo taskInfo, String obj, List<XYZ> coors, int[] patchSize);
+    public abstract void postProcess(String swcPath, String baseDir);
     public JSONArray detectByModel(String url, String json) {
         String result = okHttpUtil.postForJsonString(url, json);
         if (result == null) {
             log.info("调用模型失败！");
             return null;
         }
-        System.out.println(result);
         JSONObject jsonObjectTemp = (JSONObject) JSONObject.parse(result);
         // return null;
         return (JSONArray) jsonObjectTemp.get("output");

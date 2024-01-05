@@ -4,12 +4,14 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zhy.springboot.superuserserver.config.GlobalConfigs;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.nio.file.attribute.PosixFilePermission;
 import java.nio.file.attribute.PosixFilePermissions;
@@ -34,11 +36,8 @@ public class Utils {
     @Resource
     private OkHttpUtil okHttpUtil;
 
-    private Map<String, List<XYZ>> resMap = new HashMap<>();
-
-    public Map<String, List<XYZ>> getResMap() {
-        return resMap;
-    }
+    @Getter
+    private final Map<String, List<XYZ>> resMap = new HashMap<>();
 
     public void setSemaphore() {
         if (semaphore == null) {
@@ -47,7 +46,7 @@ public class Utils {
     }
 
     public String consumeInputStream(InputStream is) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(is, "utf-8"));
+        BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
         String s;
         StringBuilder sb = new StringBuilder();
         while ((s = br.readLine()) != null) {

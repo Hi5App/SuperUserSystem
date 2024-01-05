@@ -34,13 +34,13 @@ public class DetectService {
     @Autowired
     CrossingModelUtils crossingModelUtils;
 
-    public JSONArray detectMissing(String swcPath, String baseDir, String obj, List<XYZ> coors) {
+    public JSONArray detectMissing(TaskInfo taskInfo, String obj, List<XYZ> coors) {
         log.info("enter detectMissing...");
-        missingModelUtils.preProcess(baseDir, swcPath, obj, coors, globalConfigs.getTipPatchSize());
+        missingModelUtils.preProcess(taskInfo, obj, coors, globalConfigs.getTipPatchSize());
 
         missingModelUtils.loadModel();
 
-        String json = handleInputForMissing(swcPath, baseDir, obj);
+        String json = handleInputForMissing(taskInfo.getSwcPath(), taskInfo.getBaseDirPath(), obj);
         JSONArray result = missingModelUtils.detectByModel(globalConfigs.getUrlForMissingModel(), json);
 
         missingModelUtils.unloadModel();
@@ -51,18 +51,18 @@ public class DetectService {
         // return null;
     }
 
-    public JSONArray detectCrossing(String swcPath, String baseDir, String obj, List<List<PointInfo>> infos) {
+    public JSONArray detectCrossing(TaskInfo taskInfo, String obj, List<List<PointInfo>> infos) {
         log.info("enter detectCrossing...");
         List<XYZ> coors = new ArrayList<>();
         for (List<PointInfo> info : infos) {
             XYZ tmp = new XYZ(info.get(0).getX(), info.get(0).getY(), info.get(0).getZ());
             coors.add(tmp);
         }
-        crossingModelUtils.preProcess(baseDir, swcPath, obj, coors, globalConfigs.getCrossingPatchSize());
+        crossingModelUtils.preProcess(taskInfo, obj, coors, globalConfigs.getCrossingPatchSize());
 
         crossingModelUtils.loadModel();
 
-        String json = handleInputForCrossing(infos, swcPath, baseDir, obj);
+        String json = handleInputForCrossing(infos, taskInfo.getSwcPath(), taskInfo.getBaseDirPath(), obj);
         JSONArray result = crossingModelUtils.detectByModel(globalConfigs.getUrlForCrossingModel(), json);
 
         crossingModelUtils.unloadModel();

@@ -1,8 +1,8 @@
-2024-01-05 17:00:55.377  INFO 12016 --- [main] c.z.s.s.SuperUserServerApplicationTests  : Starting SuperUserServerApplicationTests using Java 1.8.0_382 on DESKTOP-99THP1R with PID 12016 (started by penglab in D:\source\JavaProjects\SuperUserServer)
-2024-01-05 17:00:55.380  INFO 12016 --- [main] c.z.s.s.SuperUserServerApplicationTests  : No active profile set, falling back to 1 default profile: "default"
-2024-01-05 17:00:57.449  INFO 12016 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 15 endpoint(s) beneath base path '/actuator'
-2024-01-05 17:00:57.494  INFO 12016 --- [main] c.z.s.s.SuperUserServerApplicationTests  : Started SuperUserServerApplicationTests in 2.426 seconds (JVM running for 3.182)
-2024-01-05 17:00:57.531 ERROR 12016 --- [registrationTask1] o.s.s.s.TaskUtils$LoggingErrorHandler    : Unexpected error occurred in scheduled task
+2024-01-03 17:44:10.687  INFO 8784 --- [main] c.z.s.s.SuperUserServerApplicationTests  : Starting SuperUserServerApplicationTests using Java 1.8.0_382 on DESKTOP-99THP1R with PID 8784 (started by penglab in D:\source\JavaProjects\SuperUserServer)
+2024-01-03 17:44:10.690  INFO 8784 --- [main] c.z.s.s.SuperUserServerApplicationTests  : No active profile set, falling back to 1 default profile: "default"
+2024-01-03 17:44:13.060  INFO 8784 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 15 endpoint(s) beneath base path '/actuator'
+2024-01-03 17:44:13.103  INFO 8784 --- [main] c.z.s.s.SuperUserServerApplicationTests  : Started SuperUserServerApplicationTests in 2.821 seconds (JVM running for 3.839)
+2024-01-03 17:44:13.147 ERROR 8784 --- [registrationTask1] o.s.s.s.TaskUtils$LoggingErrorHandler    : Unexpected error occurred in scheduled task
 
 java.lang.IllegalStateException: couldn't determine local port. Please set spring.boot.admin.client.instance.service-base-url.
 	at de.codecentric.boot.admin.client.registration.DefaultApplicationFactory.getLocalServerPort(DefaultApplicationFactory.java:192) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]

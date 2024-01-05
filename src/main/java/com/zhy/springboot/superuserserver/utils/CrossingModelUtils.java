@@ -47,7 +47,7 @@ public class CrossingModelUtils extends BaseModelUtils{
         return super.detectByModel(url, json);
     }
 
-    public void preProcess(String baseDir, String swcPath, String obj, List<XYZ> coors, int[] patchSize) {
+    public void preProcess(TaskInfo taskInfo, String obj, List<XYZ> coors, int[] patchSize) {
         log.info("enter crossingModelUtils preProcess...");
         //get username and password
         String username = globalConfigs.getUsername();
@@ -67,10 +67,10 @@ public class CrossingModelUtils extends BaseModelUtils{
         XYZ imageCurRes = resList.get(1);
 
         //swc坐标变换
-        utils.convertCoorsInSwc(swcPath, imageMaxRes, imageCurRes);
+        utils.convertCoorsInSwc(taskInfo.getSwcPath(), imageMaxRes, imageCurRes);
 
         //获取切割swc所需参数
-        File swcFile = new File(swcPath);
+        File swcFile = new File(taskInfo.getSwcPath());
         String swcName = swcFile.getName();
         int dotIndex = swcName.lastIndexOf(".");
         if (dotIndex > 0) {
@@ -78,7 +78,7 @@ public class CrossingModelUtils extends BaseModelUtils{
         }
         String resForCropSwc = String.join(File.separator, "/test", obj);
 
-        utils.copySwcFile2AnotherPath(obj, swcPath, swcFile.getName());
+        utils.copySwcFile2AnotherPath(obj, taskInfo.getSwcPath(), swcFile.getName());
 
         for (XYZ coor : coors) {
             // String xmin = String.format("%06d", (int) coor.x - patchSize[0] / 2);
@@ -91,7 +91,9 @@ public class CrossingModelUtils extends BaseModelUtils{
             XYZ convertedCoor = utils.convertMaxRes2CurrResCoords(imageMaxRes, imageCurRes, coor.x, coor.y, coor.z);
 
             String fileName = (int) convertedCoor.x + "_" + (int) convertedCoor.y + "_" + (int) convertedCoor.z;
-            String dirPath = String.join(File.separator, baseDir, fileName);
+            taskInfo.getCurCoor2MaxCoorMap().put(fileName, coor.x + "_" + coor.y + "_" + coor.z);
+
+            String dirPath = String.join(File.separator, taskInfo.getBaseDirPath(), fileName);
             Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxrwxrwx");
             File eachDir = new File(dirPath);
             if (!eachDir.isDirectory()) {
@@ -112,7 +114,7 @@ public class CrossingModelUtils extends BaseModelUtils{
             // 获取图像块
             XYZ pa1 = new XYZ((int) convertedCoor.x - patchSize[0] / 2, (int) convertedCoor.y - patchSize[0] / 2, (int) convertedCoor.z - patchSize[0] / 2);
             XYZ pa2 = new XYZ((int) convertedCoor.x + patchSize[0] / 2, (int) convertedCoor.y + patchSize[0] / 2, (int) convertedCoor.z + patchSize[0] / 2);
-            utils.getCroppedImage(pa1, pa2, obj, dirPath, imageCurRes, username, password);
+            utils.getCroppedImage(pa1, pa2, dirPath, obj, imageCurRes, username, password);
 
             //获取切割后的swc
             utils.getCroppedSwc(pa1, pa2, swcName, resForCropSwc, username, password, dirPath);

@@ -1,5 +1,6 @@
 package Tests;
 
+import com.zhy.springboot.superuserserver.utils.TaskInfo;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -26,5 +27,10 @@ public class SomeTests {
     @Test
     void testResXYZ2String(){
 
+    }
+
+    @Test
+    void testGetFunc(){
+        // TaskInfo t = new TaskInfo();
     }
 }

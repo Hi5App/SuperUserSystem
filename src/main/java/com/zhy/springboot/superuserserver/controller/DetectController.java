@@ -6,10 +6,7 @@ import com.zhy.springboot.superuserserver.bean.CrossingInfo;
 import com.zhy.springboot.superuserserver.bean.MissingInfo;
 import com.zhy.springboot.superuserserver.config.GlobalConfigs;
 import com.zhy.springboot.superuserserver.service.DetectService;
-import com.zhy.springboot.superuserserver.utils.PointInfo;
-import com.zhy.springboot.superuserserver.utils.R;
-import com.zhy.springboot.superuserserver.utils.Utils;
-import com.zhy.springboot.superuserserver.utils.XYZ;
+import com.zhy.springboot.superuserserver.utils.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +23,7 @@ import java.nio.file.attribute.PosixFilePermissions;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @Author zhy
@@ -46,11 +44,8 @@ public class DetectController {
     @Autowired
     private GlobalConfigs globalConfigs;
 
-    private String swcPathForMissing;
-    private String baseDirPathForMissing;
-
-    private String swcPathForCrossing;
-    private String baseDirPathForCrossing;
+    private final Map<String, TaskInfo> mapForMissing = new HashMap<>();
+    private final Map<String, TaskInfo> mapForCrossing = new HashMap<>();
 
     @PostMapping(value = {"/file/for-missing"})
     public R getSwcFileForMissing(MultipartFile swcFile) {
@@ -60,9 +55,9 @@ public class DetectController {
         if (swcFile != null && !swcFile.isEmpty()) {
             try {
                 String swcName = swcFile.getOriginalFilename();
-                String baseDir="";
-                if(swcName!=null){
-                    baseDir = String.join(File.separator, globalConfigs.getSavePathForPredict(), "tip", swcName.substring(0, swcName.length()-".ano.eswc".length()));
+                String swcNameWithNoSuffix;
+                if(swcName != null) {
+                    swcNameWithNoSuffix = swcName.substring(0, swcName.length() - ".ano.eswc".length());
                 }
                 else{
                     log.info("swcfile not exists!");
@@ -70,6 +65,10 @@ public class DetectController {
                     r.setCode("201");
                     return r;
                 }
+
+                String baseDir="";
+                baseDir = String.join(File.separator, globalConfigs.getSavePathForPredict(), "tip", swcNameWithNoSuffix);
+
                 File dir = new File(baseDir);
                 boolean flag = false;
                 if (!dir.exists()) {
@@ -102,10 +101,9 @@ public class DetectController {
                         e.printStackTrace();
                     }
                 }
-                baseDirPathForMissing=timeDirPath;
-
                 swcPath = String.join(File.separator, timeDirPath, swcName);
-                swcPathForMissing = swcPath;
+                mapForMissing.put(swcNameWithNoSuffix, new TaskInfo(swcPath, timeDirPath));
+
                 InputStream inputStream = null;
                 FileOutputStream outputStream = null;
                 try {
@@ -159,9 +157,9 @@ public class DetectController {
         if (swcFile != null && !swcFile.isEmpty()) {
             try {
                 String swcName = swcFile.getOriginalFilename();
-                String baseDir="";
-                if(swcName!=null){
-                    baseDir = String.join(File.separator, globalConfigs.getSavePathForPredict(), "crossing", swcName.substring(0, swcName.length()-".ano.eswc".length()));
+                String swcNameWithNoSuffix;
+                if(swcName != null) {
+                    swcNameWithNoSuffix = swcName.substring(0, swcName.length() - ".ano.eswc".length());
                 }
                 else{
                     log.info("swcfile not exists!");
@@ -169,6 +167,8 @@ public class DetectController {
                     r.setCode("201");
                     return r;
                 }
+                String baseDir="";
+                baseDir = String.join(File.separator, globalConfigs.getSavePathForPredict(), "crossing", swcNameWithNoSuffix);
                 File dir = new File(baseDir);
                 boolean flag = false;
                 if (!dir.exists()) {
@@ -201,10 +201,9 @@ public class DetectController {
                         e.printStackTrace();
                     }
                 }
-                baseDirPathForCrossing=timeDirPath;
-
                 swcPath = String.join(File.separator, timeDirPath, swcName);
-                swcPathForCrossing = swcPath;
+                mapForCrossing.put(swcNameWithNoSuffix, new TaskInfo(swcPath, timeDirPath));
+
                 InputStream inputStream = null;
                 FileOutputStream outputStream = null;
                 try {
@@ -256,8 +255,18 @@ public class DetectController {
         R r = new R();
         String obj = crossingInfo.getObj();
         List<List<PointInfo>> infos = crossingInfo.getInfos();
-        System.out.println(crossingInfo);
-        File f = new File(swcPathForCrossing);
+        String swcNameWithNoSuffix = crossingInfo.getSwcNameWithNoSuffix();
+        TaskInfo taskInfo;
+        if(mapForCrossing.containsKey(swcNameWithNoSuffix)){
+            taskInfo = mapForCrossing.get(swcNameWithNoSuffix);
+        }else{
+            log.info("taskinfo not exists!");
+            r.setMsg("taskinfo not exists!");
+            r.setCode("201");
+            return r;
+        }
+
+        File f = new File(taskInfo.getSwcPath());
         if (!f.exists()) {
             log.info("swcfile not exists!");
             r.setMsg("swcfile not exists!");
@@ -265,7 +274,7 @@ public class DetectController {
             return r;
         }
 
-        JSONArray result = detectService.detectCrossing(swcPathForCrossing, baseDirPathForCrossing, obj, infos);
+        JSONArray result = detectService.detectCrossing(taskInfo, obj, infos);
         if (result == null) {
             log.info("fail to call the model!");
             r.setMsg("fail to call the model!");
@@ -279,17 +288,13 @@ public class DetectController {
         for (int i = 0; i < size; i++) {
             Map<String, Object> tmpMap = new HashMap<>(4);
             JSONObject jsonObject = result.getJSONObject(i);
-            List<Integer> allCoors = new ArrayList<>();
             String name = jsonObject.getString("name");
-            String[] retvals = name.split("_");
-            for (int j=0; j<retvals.length; j=j+3) {
-                XYZ convertedRetvals = utils.convertCurRes2MaxResCoords(resList.get(0), resList.get(1),
-                        Integer.parseInt(retvals[j]), Integer.parseInt(retvals[j+1]), Integer.parseInt(retvals[j+2]));
 
-                allCoors.add((int)convertedRetvals.x);
-                allCoors.add((int)convertedRetvals.y);
-                allCoors.add((int)convertedRetvals.z);
-            }
+            String maxCoors = taskInfo.getCurCoor2MaxCoorMap().get(name);
+            String[] retvals = maxCoors.split("_");
+            List<Float> allCoors = Arrays.stream(retvals)
+                    .map(Float::valueOf)
+                    .collect(Collectors.toList());
             // for (int j = 0; j < 3; j++) {
             //     rCoors.add((allCoors.get(j) + allCoors.get(j+3)) / 2);
             // }
@@ -309,10 +314,19 @@ public class DetectController {
         R r = new R();
         String obj = missingInfo.getObj();
         List<XYZ> coors = missingInfo.getCoors();
+        String swcNameWithNoSuffix = missingInfo.getSwcNameWithNoSuffix();
         // swcPathForMissing="C:\\Users\\10422\\Downloads\\01864_P020_T01-S030_ROL_R0613_RJ-20221021_RJ_02.ano.eswc";
-        System.out.println(missingInfo);
-        System.out.println(swcPathForMissing);
-        File f = new File(swcPathForMissing);
+        TaskInfo taskInfo;
+        if(mapForMissing.containsKey(swcNameWithNoSuffix)){
+            taskInfo = mapForMissing.get(swcNameWithNoSuffix);
+        }else{
+            log.info("taskinfo not exists!");
+            r.setMsg("taskinfo not exists!");
+            r.setCode("201");
+            return r;
+        }
+
+        File f = new File(taskInfo.getSwcPath());
         if (!f.exists()) {
             log.info("swcfile not exists!");
             r.setMsg("swcfile not exists!");
@@ -320,7 +334,7 @@ public class DetectController {
             return r;
         }
 
-        JSONArray result = detectService.detectMissing(swcPathForMissing, baseDirPathForMissing, obj, coors);
+        JSONArray result = detectService.detectMissing(taskInfo, obj, coors);
         if (result == null) {
             log.info("fail to call the model!");
             r.setMsg("fail to call the model!");
@@ -334,17 +348,13 @@ public class DetectController {
         for (int i = 0; i < size; i++) {
             Map<String, Object> tmpMap = new HashMap<>(4);
             JSONObject jsonObject = result.getJSONObject(i);
-            List<Integer> allCoors = new ArrayList<>();
             String name = jsonObject.getString("name");
-            String[] retvals = name.split("_");
-            for (int j=0; j<retvals.length; j=j+3) {
-                XYZ convertedRetvals = utils.convertCurRes2MaxResCoords(resList.get(0), resList.get(1),
-                        Integer.parseInt(retvals[j]), Integer.parseInt(retvals[j+1]), Integer.parseInt(retvals[j+2]));
 
-                allCoors.add((int)convertedRetvals.x);
-                allCoors.add((int)convertedRetvals.y);
-                allCoors.add((int)convertedRetvals.z);
-            }
+            String maxCoors = taskInfo.getCurCoor2MaxCoorMap().get(name);
+            String[] retvals = maxCoors.split("_");
+            List<Float> allCoors = Arrays.stream(retvals)
+                    .map(Float::valueOf)
+                    .collect(Collectors.toList());
             // for (int j = 0; j < 3; j++) {
             //     rCoors.add((allCoors.get(j) + allCoors.get(j+3)) / 2);
             // }
