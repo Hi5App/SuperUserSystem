@@ -34,6 +34,9 @@ public class DetectService {
     @Autowired
     CrossingModelUtils crossingModelUtils;
 
+    @Autowired
+    BranchingModelUtils branchingModelUtils;
+
     public JSONArray detectMissing(TaskInfo taskInfo, String obj, List<XYZ> coors) {
         log.info("enter detectMissing...");
         missingModelUtils.preProcess(taskInfo, obj, coors, globalConfigs.getTipPatchSize());
@@ -72,6 +75,22 @@ public class DetectService {
         return result;
     }
 
+    public JSONArray detectBranching(TaskInfo taskInfo, String obj, List<XYZ> coors){
+        log.info("enter detectBranching...");
+        branchingModelUtils.preProcess(taskInfo, obj, coors, globalConfigs.getBranchingPatchSize());
+
+        branchingModelUtils.loadModel();
+
+        String json = handleInputForBranching(taskInfo.getBaseDirPath(), obj);
+        JSONArray result = branchingModelUtils.detectByModel(globalConfigs.getUrlForBranchingModel(), json);
+
+        branchingModelUtils.unloadModel();
+
+        // utils.postProcess(swcPath, baseDir);
+
+        return result;
+    }
+
     public String handleInputForMissing(String swcPath, String baseDir, String obj) {
         Map<String, Object> mapStr = new HashMap<String, Object>();
         mapStr.put("swc_path", swcPath);
@@ -79,6 +98,14 @@ public class DetectService {
         // mapStr.put("x_ratio", resList.get(0).x / resList.get(1).x);
         // mapStr.put("y_ratio", resList.get(0).y / resList.get(1).y);
         // mapStr.put("z_ratio", resList.get(0).z / resList.get(1).z);
+        Map<String, Object> inputMap = new HashMap<String, Object>();
+        inputMap.put("input", mapStr);
+        return JSON.toJSONString(inputMap);
+    }
+
+    public String handleInputForBranching(String baseDir, String obj) {
+        Map<String, Object> mapStr = new HashMap<String, Object>();
+        mapStr.put("input_path", baseDir);
         Map<String, Object> inputMap = new HashMap<String, Object>();
         inputMap.put("input", mapStr);
         return JSON.toJSONString(inputMap);

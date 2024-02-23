@@ -73,6 +73,7 @@ globalconfig:
   urlForGetImageList: "http://114.117.165.134:26000/dynamic/image/getimagelist"
   urlForCrossingModel: "http://114.117.165.134:26004/predictions"
   urlForMissingModel: "http://114.117.165.134:26003/predictions"
+  urlForBranchingModel: "http://114.117.165.134:26013/predictions"
   mainPath: "/home/BraintellServer"
   cropImageBin: "${globalconfig.mainPath}/vaa3d/cropimage"
   dataPath: "${globalconfig.mainPath}/data"
@@ -80,6 +81,7 @@ globalconfig:
   imageDir: "${globalconfig.mainPath}/image"
   savePathForPredict: "/home/zhy/tmpDirForPredict"
   tipPatchSize: [32,32,32]
+  branchingPatchSize: [64,64,64]
   crossingPatchSize: [32,32,32]
   cropprocess: 50
   username: zackzhy

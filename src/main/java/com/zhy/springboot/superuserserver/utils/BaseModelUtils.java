@@ -31,14 +31,9 @@ public abstract class BaseModelUtils {
      * @Since version-1.0
      */
     public enum ModelType {
-        /**
-         * 检测Crossing
-         */
         Crossing,
-        /**
-         * 检测Missing
-         */
-        Missing
+        Missing,
+        Branching
     }
 
     public ModelType modelType;

@@ -2,6 +2,7 @@ package com.zhy.springboot.superuserserver.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.zhy.springboot.superuserserver.bean.BranchingInfo;
 import com.zhy.springboot.superuserserver.bean.CrossingInfo;
 import com.zhy.springboot.superuserserver.bean.MissingInfo;
 import com.zhy.springboot.superuserserver.config.GlobalConfigs;
@@ -56,17 +57,16 @@ public class DetectController {
             try {
                 String swcName = swcFile.getOriginalFilename();
                 String swcNameWithNoSuffix;
-                if(swcName != null) {
+                if (swcName != null) {
                     swcNameWithNoSuffix = swcName.substring(0, swcName.length() - ".ano.eswc".length());
-                }
-                else{
+                } else {
                     log.info("swcfile not exists!");
                     r.setMsg("swcfile not exists!");
                     r.setCode("201");
                     return r;
                 }
 
-                String baseDir="";
+                String baseDir = "";
                 baseDir = String.join(File.separator, globalConfigs.getSavePathForPredict(), "tip", swcNameWithNoSuffix);
 
                 File dir = new File(baseDir);
@@ -91,8 +91,8 @@ public class DetectController {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
                 // 将当前时间按照指定格式转换为字符串
                 String formattedDate = currentTime.format(formatter);
-                String timeDirPath=String.join(File.separator, baseDir, formattedDate);
-                File timeDir=new File(timeDirPath);
+                String timeDirPath = String.join(File.separator, baseDir, formattedDate);
+                File timeDir = new File(timeDirPath);
                 if (!timeDir.exists()) {
                     timeDir.mkdirs();
                     try {
@@ -158,16 +158,15 @@ public class DetectController {
             try {
                 String swcName = swcFile.getOriginalFilename();
                 String swcNameWithNoSuffix;
-                if(swcName != null) {
+                if (swcName != null) {
                     swcNameWithNoSuffix = swcName.substring(0, swcName.length() - ".ano.eswc".length());
-                }
-                else{
+                } else {
                     log.info("swcfile not exists!");
                     r.setMsg("swcfile not exists!");
                     r.setCode("201");
                     return r;
                 }
-                String baseDir="";
+                String baseDir = "";
                 baseDir = String.join(File.separator, globalConfigs.getSavePathForPredict(), "crossing", swcNameWithNoSuffix);
                 File dir = new File(baseDir);
                 boolean flag = false;
@@ -191,8 +190,8 @@ public class DetectController {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
                 // 将当前时间按照指定格式转换为字符串
                 String formattedDate = currentTime.format(formatter);
-                String timeDirPath=String.join(File.separator, baseDir, formattedDate);
-                File timeDir=new File(timeDirPath);
+                String timeDirPath = String.join(File.separator, baseDir, formattedDate);
+                File timeDir = new File(timeDirPath);
                 if (!timeDir.exists()) {
                     timeDir.mkdirs();
                     try {
@@ -257,9 +256,9 @@ public class DetectController {
         List<List<PointInfo>> infos = crossingInfo.getInfos();
         String swcNameWithNoSuffix = crossingInfo.getSwcNameWithNoSuffix();
         TaskInfo taskInfo;
-        if(mapForCrossing.containsKey(swcNameWithNoSuffix)){
+        if (mapForCrossing.containsKey(swcNameWithNoSuffix)) {
             taskInfo = mapForCrossing.get(swcNameWithNoSuffix);
-        }else{
+        } else {
             log.info("taskinfo not exists!");
             r.setMsg("taskinfo not exists!");
             r.setCode("201");
@@ -317,9 +316,9 @@ public class DetectController {
         String swcNameWithNoSuffix = missingInfo.getSwcNameWithNoSuffix();
         // swcPathForMissing="C:\\Users\\10422\\Downloads\\01864_P020_T01-S030_ROL_R0613_RJ-20221021_RJ_02.ano.eswc";
         TaskInfo taskInfo;
-        if(mapForMissing.containsKey(swcNameWithNoSuffix)){
+        if (mapForMissing.containsKey(swcNameWithNoSuffix)) {
             taskInfo = mapForMissing.get(swcNameWithNoSuffix);
-        }else{
+        } else {
             log.info("taskinfo not exists!");
             r.setMsg("taskinfo not exists!");
             r.setCode("201");
@@ -365,6 +364,95 @@ public class DetectController {
         r.setCode("200");
         r.setMsg("success!");
         log.info("detect missing success!");
+        r.setData(list);
+        return r;
+    }
+
+    @PostMapping(value = {"/branching"})
+    public R detectBranching(@RequestBody BranchingInfo branchingInfo) {
+        R r = new R();
+        String obj = branchingInfo.getObj();
+        List<XYZ> coors = branchingInfo.getCoors();
+        String swcName = branchingInfo.getSwcName();
+
+        Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxrwxrwx");
+        String swcNameWithNoSuffix;
+        if (swcName != null) {
+            swcNameWithNoSuffix = swcName.substring(0, swcName.length() - ".ano.eswc".length());
+        } else {
+            log.info("swcfile not exists!");
+            r.setMsg("swcfile not exists!");
+            r.setCode("201");
+            return r;
+        }
+        String baseDir = "";
+        baseDir = String.join(File.separator, globalConfigs.getSavePathForPredict(), "branching", swcNameWithNoSuffix);
+        File dir = new File(baseDir);
+        boolean flag = false;
+        if (!dir.exists()) {
+            flag = dir.mkdirs();
+            try {
+                Files.setPosixFilePermissions(Paths.get(String.valueOf(dir)), perms);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (!flag) {
+                log.info("cannot create dir!");
+                r.setMsg("cannot create dir!");
+                r.setCode("203");
+                return r;
+            }
+        }
+
+        LocalDateTime currentTime = LocalDateTime.now();
+        // 定义日期时间格式化器
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
+        // 将当前时间按照指定格式转换为字符串
+        String formattedDate = currentTime.format(formatter);
+        String timeDirPath = String.join(File.separator, baseDir, formattedDate);
+        File timeDir = new File(timeDirPath);
+        if (!timeDir.exists()) {
+            timeDir.mkdirs();
+            try {
+                Files.setPosixFilePermissions(Paths.get(String.valueOf(timeDir)), perms);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        String swcPath = String.join(File.separator, timeDirPath, swcName);
+        TaskInfo taskInfo = new TaskInfo(swcPath, timeDirPath);
+
+        JSONArray result = detectService.detectBranching(taskInfo, obj, coors);
+        if(result ==null)
+        {
+            log.info("fail to call the model!");
+            r.setMsg("fail to call the model!");
+            r.setCode("204");
+            return r;
+        }
+
+        List<XYZ> resList = utils.getResMap().get(obj);
+        List<Map<String, Object>> list = new ArrayList<>();
+        int size = result.size();
+        for(int i = 0; i<size;i++)
+        {
+            Map<String, Object> tmpMap = new HashMap<>(4);
+            JSONObject jsonObject = result.getJSONObject(i);
+            String name = jsonObject.getString("name");
+
+            String maxCoors = taskInfo.getCurCoor2MaxCoorMap().get(name);
+            String[] retvals = maxCoors.split("_");
+            List<Float> allCoors = Arrays.stream(retvals)
+                    .map(Float::valueOf)
+                    .collect(Collectors.toList());
+
+            tmpMap.put("coors", allCoors);
+            tmpMap.put("y_pred", jsonObject.getInteger("y_pred"));
+            list.add(tmpMap);
+        }
+        r.setCode("200");
+        r.setMsg("success!");
+        log.info("detect branching success!");
         r.setData(list);
         return r;
     }
