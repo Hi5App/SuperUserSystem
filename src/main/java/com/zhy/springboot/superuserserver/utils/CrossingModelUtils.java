@@ -76,7 +76,7 @@ public class CrossingModelUtils extends BaseModelUtils{
         if (dotIndex > 0) {
             swcName = swcName.substring(0, dotIndex);
         }
-        String resForCropSwc = String.join(File.separator, "/test", obj);
+        String resForCropSwc = String.join(File.separator, "/tempswc", obj);
 
         utils.copySwcFile2AnotherPath(obj, taskInfo.getSwcPath(), swcFile.getName());
 

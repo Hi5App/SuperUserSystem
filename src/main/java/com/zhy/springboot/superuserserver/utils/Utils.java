@@ -113,7 +113,7 @@ public class Utils {
 
     public void copySwcFile2AnotherPath(String obj, String swcPath, String swcName){
         //生成Image文件夹
-        String newSwcDir = String.join(File.separator,"/TeraConvertedBrain/data/arbor/test", obj);
+        String newSwcDir = String.join(File.separator,"/TeraConvertedBrain/data/arbor/tempswc", obj);
         Path newSwcDirPath = Paths.get(newSwcDir);
         if(!Files.exists(newSwcDirPath)){
             try {
@@ -127,7 +127,7 @@ public class Utils {
         }
 
         //复制一份swc文件
-        String newSwcPath=String.join(File.separator,"/TeraConvertedBrain/data/arbor/test", obj, swcName);
+        String newSwcPath=String.join(File.separator,"/TeraConvertedBrain/data/arbor/tempswc", obj, swcName);
         Path sourcePath = Paths.get(swcPath);
         Path targetPath = Paths.get(newSwcPath);
         try {

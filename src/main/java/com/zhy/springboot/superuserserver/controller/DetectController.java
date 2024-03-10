@@ -45,11 +45,13 @@ public class DetectController {
     @Autowired
     private GlobalConfigs globalConfigs;
 
-    private final Map<String, TaskInfo> mapForMissing = new HashMap<>();
-    private final Map<String, TaskInfo> mapForCrossing = new HashMap<>();
+    public final Map<String, TaskInfo> mapForMissing = new HashMap<>();
+    public final Map<String, TaskInfo> mapForCrossing = new HashMap<>();
 
     @PostMapping(value = {"/file/for-missing"})
     public R getSwcFileForMissing(MultipartFile swcFile) {
+        log.info("enter getSwcFileForMissing");
+        System.out.println(swcFile);
         R r = new R();
         String swcPath = "";
         Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxrwxrwx");

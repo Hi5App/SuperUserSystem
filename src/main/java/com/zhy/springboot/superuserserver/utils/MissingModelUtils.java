@@ -68,15 +68,15 @@ public class MissingModelUtils extends BaseModelUtils {
         //swc坐标变换
         utils.convertCoorsInSwc(taskInfo.getSwcPath(), imageMaxRes, imageCurRes);
 
-        //获取切割swc所需参数
+        // //获取切割swc所需参数
+        // File swcFile = new File(taskInfo.getSwcPath());
+        // String swcName = swcFile.getName();
+        // int dotIndex = swcName.lastIndexOf(".");
+        // if (dotIndex > 0) {
+        //     swcName = swcName.substring(0, dotIndex);
+        // }
+        // String resForCropSwc = String.join(File.separator, "/tempswc", obj);
         File swcFile = new File(taskInfo.getSwcPath());
-        String swcName = swcFile.getName();
-        int dotIndex = swcName.lastIndexOf(".");
-        if (dotIndex > 0) {
-            swcName = swcName.substring(0, dotIndex);
-        }
-        String resForCropSwc = String.join(File.separator, "/test", obj);
-
         utils.copySwcFile2AnotherPath(obj, taskInfo.getSwcPath(), swcFile.getName());
 
         for (XYZ coor : coors) {
@@ -116,7 +116,7 @@ public class MissingModelUtils extends BaseModelUtils {
             utils.getCroppedImage(pa1, pa2, dirPath, obj, imageCurRes, username, password);
 
             //获取切割后的swc
-            utils.getCroppedSwc(pa1, pa2, swcName, resForCropSwc, username, password, dirPath);
+            // utils.getCroppedSwc(pa1, pa2, swcName, resForCropSwc, username, password, dirPath);
         }
 
     }
