@@ -65,7 +65,7 @@ logging:
     rollingpolicy:
       max-file-size: 1MB
       file-name-pattern: "logs/server.log.%d{yyyy-MM-dd_HH}.%i.log"
-      max-history: 720
+      max-history: 60
 
 globalconfig:
   urlForGetBBImage: "http://114.117.165.134:26000/dynamic/image/cropimage"

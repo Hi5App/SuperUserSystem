@@ -41,7 +41,7 @@ public class MyFilter extends HttpFilter {
     @Override
     protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         String url = String.valueOf(request.getRequestURL());
-        if(!url.endsWith("/detect/missing")){
+        if(!url.endsWith("/detect/nouse")){
             chain.doFilter(request, response);
         }else{
             // Wrapper 封装 Request 和 Response

@@ -49,7 +49,7 @@ public abstract class BaseModelUtils {
 
     public abstract void loadModel() ;
     public abstract void unloadModel() ;
-    public abstract void preProcess(TaskInfo taskInfo, String obj, List<XYZ> coors, int[] patchSize);
+    public abstract void preProcess(TaskInfo taskInfo, String obj, String objRelaventPath, List<XYZ> coors, int[] patchSize);
     public abstract void postProcess(String swcPath, String baseDir);
     public JSONArray detectByModel(String url, String json) {
         String result = okHttpUtil.postForJsonString(url, json);

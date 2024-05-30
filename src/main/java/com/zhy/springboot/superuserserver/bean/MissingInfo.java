@@ -14,6 +14,8 @@ import java.util.List;
  */
 @Getter
 public class MissingInfo {
+    // 图像名相对路径
+    private String objRelaventPath;
     // 图像名
     private String obj;
     // 中心坐标列表
@@ -34,10 +36,15 @@ public class MissingInfo {
     public MissingInfo() {
     }
 
-    public MissingInfo(String obj, List<XYZ> coors, String swcNameWithNoSuffix) {
+    public MissingInfo(String obj, List<XYZ> coors, String swcNameWithNoSuffix, String objRelaventPath) {
         this.obj = obj;
         this.coors = coors;
         this.swcNameWithNoSuffix = swcNameWithNoSuffix;
+        this.objRelaventPath = objRelaventPath;
+    }
+
+    public void setObjRelaventPath(String objRelaventPath) {
+        this.objRelaventPath = objRelaventPath;
     }
 
     public void setObj(String obj) {

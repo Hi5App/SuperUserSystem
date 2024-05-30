@@ -95,8 +95,16 @@ public class DetectController {
                 String formattedDate = currentTime.format(formatter);
                 String timeDirPath = String.join(File.separator, baseDir, formattedDate);
                 File timeDir = new File(timeDirPath);
+                // log.info(timeDirPath);
                 if (!timeDir.exists()) {
-                    timeDir.mkdirs();
+                    // log.info("entered...");
+                    boolean isSuccess = timeDir.mkdirs();
+                    if(!isSuccess){
+                        log.info("fail to mkdirs");
+                        r.setMsg("fail to mkdirs");
+                        r.setCode("202");
+                        return r;
+                    }
                     try {
                         Files.setPosixFilePermissions(Paths.get(String.valueOf(timeDir)), perms);
                     } catch (IOException e) {
@@ -195,7 +203,13 @@ public class DetectController {
                 String timeDirPath = String.join(File.separator, baseDir, formattedDate);
                 File timeDir = new File(timeDirPath);
                 if (!timeDir.exists()) {
-                    timeDir.mkdirs();
+                    boolean isSuccess = timeDir.mkdirs();
+                    if(!isSuccess){
+                        log.info("fail to mkdirs");
+                        r.setMsg("fail to mkdirs");
+                        r.setCode("202");
+                        return r;
+                    }
                     try {
                         Files.setPosixFilePermissions(Paths.get(String.valueOf(timeDir)), perms);
                     } catch (IOException e) {
@@ -257,6 +271,7 @@ public class DetectController {
         String obj = crossingInfo.getObj();
         List<List<PointInfo>> infos = crossingInfo.getInfos();
         String swcNameWithNoSuffix = crossingInfo.getSwcNameWithNoSuffix();
+        String objRelaventPath = crossingInfo.getObjRelaventPath();
         TaskInfo taskInfo;
         if (mapForCrossing.containsKey(swcNameWithNoSuffix)) {
             taskInfo = mapForCrossing.get(swcNameWithNoSuffix);
@@ -275,7 +290,7 @@ public class DetectController {
             return r;
         }
 
-        JSONArray result = detectService.detectCrossing(taskInfo, obj, infos);
+        JSONArray result = detectService.detectCrossing(taskInfo, obj, objRelaventPath, infos);
         if (result == null) {
             log.info("fail to call the model!");
             r.setMsg("fail to call the model!");
@@ -316,6 +331,7 @@ public class DetectController {
         String obj = missingInfo.getObj();
         List<XYZ> coors = missingInfo.getCoors();
         String swcNameWithNoSuffix = missingInfo.getSwcNameWithNoSuffix();
+        String objRelaventPath = missingInfo.getObjRelaventPath();
         // swcPathForMissing="C:\\Users\\10422\\Downloads\\01864_P020_T01-S030_ROL_R0613_RJ-20221021_RJ_02.ano.eswc";
         TaskInfo taskInfo;
         if (mapForMissing.containsKey(swcNameWithNoSuffix)) {
@@ -335,7 +351,7 @@ public class DetectController {
             return r;
         }
 
-        JSONArray result = detectService.detectMissing(taskInfo, obj, coors);
+        JSONArray result = detectService.detectMissing(taskInfo, obj, objRelaventPath, coors);
         if (result == null) {
             log.info("fail to call the model!");
             r.setMsg("fail to call the model!");
@@ -376,6 +392,7 @@ public class DetectController {
         String obj = branchingInfo.getObj();
         List<XYZ> coors = branchingInfo.getCoors();
         String swcName = branchingInfo.getSwcName();
+        String objRelaventPath = branchingInfo.getObjRelaventPath();
 
         Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxrwxrwx");
         String swcNameWithNoSuffix;
@@ -414,7 +431,13 @@ public class DetectController {
         String timeDirPath = String.join(File.separator, baseDir, formattedDate);
         File timeDir = new File(timeDirPath);
         if (!timeDir.exists()) {
-            timeDir.mkdirs();
+            boolean isSuccess = timeDir.mkdirs();
+            if(!isSuccess){
+                log.info("fail to mkdirs");
+                r.setMsg("fail to mkdirs");
+                r.setCode("202");
+                return r;
+            }
             try {
                 Files.setPosixFilePermissions(Paths.get(String.valueOf(timeDir)), perms);
             } catch (IOException e) {
@@ -424,7 +447,7 @@ public class DetectController {
         String swcPath = String.join(File.separator, timeDirPath, swcName);
         TaskInfo taskInfo = new TaskInfo(swcPath, timeDirPath);
 
-        JSONArray result = detectService.detectBranching(taskInfo, obj, coors);
+        JSONArray result = detectService.detectBranching(taskInfo, obj, objRelaventPath, coors);
         if(result ==null)
         {
             log.info("fail to call the model!");

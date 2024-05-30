@@ -14,6 +14,8 @@ import java.util.List;
  */
 @Getter
 public class BranchingInfo {
+    // 图像名相对路径
+    private String objRelaventPath;
     // 图像名
     private String obj;
     // 中心坐标列表
@@ -38,6 +40,10 @@ public class BranchingInfo {
     public BranchingInfo(String obj, List<XYZ> coors) {
         this.obj = obj;
         this.coors = coors;
+    }
+
+    public void setObjRelaventPath(String objRelaventPath) {
+        this.objRelaventPath = objRelaventPath;
     }
 
     public void setObj(String obj) {

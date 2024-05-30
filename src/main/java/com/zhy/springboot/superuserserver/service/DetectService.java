@@ -37,9 +37,9 @@ public class DetectService {
     @Autowired
     BranchingModelUtils branchingModelUtils;
 
-    public JSONArray detectMissing(TaskInfo taskInfo, String obj, List<XYZ> coors) {
+    public JSONArray detectMissing(TaskInfo taskInfo, String obj, String objRelaventPath, List<XYZ> coors) {
         log.info("enter detectMissing...");
-        missingModelUtils.preProcess(taskInfo, obj, coors, globalConfigs.getTipPatchSize());
+        missingModelUtils.preProcess(taskInfo, obj, objRelaventPath, coors, globalConfigs.getTipPatchSize());
 
         missingModelUtils.loadModel();
 
@@ -54,14 +54,14 @@ public class DetectService {
         // return null;
     }
 
-    public JSONArray detectCrossing(TaskInfo taskInfo, String obj, List<List<PointInfo>> infos) {
+    public JSONArray detectCrossing(TaskInfo taskInfo, String obj, String objRelaventPath, List<List<PointInfo>> infos) {
         log.info("enter detectCrossing...");
         List<XYZ> coors = new ArrayList<>();
         for (List<PointInfo> info : infos) {
             XYZ tmp = new XYZ(info.get(0).getX(), info.get(0).getY(), info.get(0).getZ());
             coors.add(tmp);
         }
-        crossingModelUtils.preProcess(taskInfo, obj, coors, globalConfigs.getCrossingPatchSize());
+        crossingModelUtils.preProcess(taskInfo, obj, objRelaventPath, coors, globalConfigs.getCrossingPatchSize());
 
         crossingModelUtils.loadModel();
 
@@ -75,9 +75,9 @@ public class DetectService {
         return result;
     }
 
-    public JSONArray detectBranching(TaskInfo taskInfo, String obj, List<XYZ> coors){
+    public JSONArray detectBranching(TaskInfo taskInfo, String obj, String objRelaventPath, List<XYZ> coors){
         log.info("enter detectBranching...");
-        branchingModelUtils.preProcess(taskInfo, obj, coors, globalConfigs.getBranchingPatchSize());
+        branchingModelUtils.preProcess(taskInfo, obj, objRelaventPath, coors, globalConfigs.getBranchingPatchSize());
 
         branchingModelUtils.loadModel();
 

@@ -47,7 +47,7 @@ public class CrossingModelUtils extends BaseModelUtils{
         return super.detectByModel(url, json);
     }
 
-    public void preProcess(TaskInfo taskInfo, String obj, List<XYZ> coors, int[] patchSize) {
+    public void preProcess(TaskInfo taskInfo, String obj, String objRelaventPath, List<XYZ> coors, int[] patchSize) {
         log.info("enter crossingModelUtils preProcess...");
         //get username and password
         String username = globalConfigs.getUsername();
@@ -112,9 +112,13 @@ public class CrossingModelUtils extends BaseModelUtils{
             }
 
             // 获取图像块
-            XYZ pa1 = new XYZ((int) convertedCoor.x - patchSize[0] / 2, (int) convertedCoor.y - patchSize[0] / 2, (int) convertedCoor.z - patchSize[0] / 2);
-            XYZ pa2 = new XYZ((int) convertedCoor.x + patchSize[0] / 2, (int) convertedCoor.y + patchSize[0] / 2, (int) convertedCoor.z + patchSize[0] / 2);
-            utils.getCroppedImage(pa1, pa2, dirPath, obj, imageCurRes, username, password);
+            XYZ pa1 = new XYZ((int) (convertedCoor.x - patchSize[0] / 2), (int) (convertedCoor.y - patchSize[0] / 2), (int) (convertedCoor.z - patchSize[0] / 2));
+            XYZ pa2 = new XYZ((int) (convertedCoor.x + patchSize[0] / 2), (int) (convertedCoor.y + patchSize[0] / 2), (int) (convertedCoor.z + patchSize[0] / 2));
+            String objMiddlePath = obj;
+            if(objRelaventPath != null){
+                objMiddlePath = String.join(File.separator, objRelaventPath, obj);
+            }
+            utils.getCroppedImage(pa1, pa2, dirPath, objMiddlePath, imageCurRes, username, password);
 
             //获取切割后的swc
             utils.getCroppedSwc(pa1, pa2, swcName, resForCropSwc, username, password, dirPath);

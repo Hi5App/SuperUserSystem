@@ -1,9 +1,9 @@
-2024-05-30 15:45:11.012  INFO 9180 --- [main] c.z.s.s.SuperUserServerApplicationTests  : Starting SuperUserServerApplicationTests using Java 1.8.0_382 on DESKTOP-99THP1R with PID 9180 (started by penglab in D:\source\JavaProjects\SuperUserServer)
-2024-05-30 15:45:11.015  INFO 9180 --- [main] c.z.s.s.SuperUserServerApplicationTests  : No active profile set, falling back to 1 default profile: "default"
-2024-05-30 15:45:13.449  INFO 9180 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 15 endpoint(s) beneath base path '/actuator'
-2024-05-30 15:45:13.493  INFO 9180 --- [main] c.z.s.s.SuperUserServerApplicationTests  : Started SuperUserServerApplicationTests in 2.983 seconds (JVM running for 4.067)
-2024-05-30 15:45:13.522  INFO 9180 --- [main] c.z.s.s.config.CustomApplicationRunner   : enter CustomApplicationRunner
-2024-05-30 15:45:13.578 ERROR 9180 --- [registrationTask1] o.s.s.s.TaskUtils$LoggingErrorHandler    : Unexpected error occurred in scheduled task
+2024-03-26 20:37:21.408  INFO 17292 --- [main] c.z.s.s.SuperUserServerApplicationTests  : Starting SuperUserServerApplicationTests using Java 1.8.0_382 on DESKTOP-99THP1R with PID 17292 (started by penglab in D:\source\JavaProjects\SuperUserServer)
+2024-03-26 20:37:21.412  INFO 17292 --- [main] c.z.s.s.SuperUserServerApplicationTests  : No active profile set, falling back to 1 default profile: "default"
+2024-03-26 20:37:23.966  INFO 17292 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 15 endpoint(s) beneath base path '/actuator'
+2024-03-26 20:37:24.012  INFO 17292 --- [main] c.z.s.s.SuperUserServerApplicationTests  : Started SuperUserServerApplicationTests in 3.056 seconds (JVM running for 4.094)
+2024-03-26 20:37:24.041  INFO 17292 --- [main] c.z.s.s.config.CustomApplicationRunner   : enter CustomApplicationRunner
+2024-03-26 20:37:24.086 ERROR 17292 --- [registrationTask1] o.s.s.s.TaskUtils$LoggingErrorHandler    : Unexpected error occurred in scheduled task
 
 java.lang.IllegalStateException: couldn't determine local port. Please set spring.boot.admin.client.instance.service-base-url.
 	at de.codecentric.boot.admin.client.registration.DefaultApplicationFactory.getLocalServerPort(DefaultApplicationFactory.java:192) ~[spring-boot-admin-client-2.7.2.jar:2.7.2]

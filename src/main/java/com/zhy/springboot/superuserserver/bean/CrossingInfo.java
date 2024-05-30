@@ -14,6 +14,8 @@ import java.util.List;
  */
 @Getter
 public class CrossingInfo {
+    // 图像名相对路径
+    private String objRelaventPath;
     // 图像名
     private String obj;
     // crossing结构相关信息
@@ -24,10 +26,15 @@ public class CrossingInfo {
     public CrossingInfo() {
     }
 
-    public CrossingInfo(String obj, List<List<PointInfo>> infos, String swcNameWithNoSuffix) {
+    public void setObjRelaventPath(String objRelaventPath) {
+        this.objRelaventPath = objRelaventPath;
+    }
+
+    public CrossingInfo(String obj, List<List<PointInfo>> infos, String swcNameWithNoSuffix, String objRelaventPath) {
         this.obj = obj;
         this.infos = infos;
         this.swcNameWithNoSuffix = swcNameWithNoSuffix;
+        this.objRelaventPath = objRelaventPath;
     }
 
     public void setObj(String obj) {
