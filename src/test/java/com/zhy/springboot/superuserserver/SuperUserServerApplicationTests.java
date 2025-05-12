@@ -2,7 +2,7 @@ package com.zhy.springboot.superuserserver;
 
 import com.zhy.springboot.superuserserver.config.GlobalConfigs;
 import com.zhy.springboot.superuserserver.utils.Utils;
-import com.zhy.springboot.superuserserver.utils.XYZ;
+import com.zhy.springboot.superuserserver.bean.entity.XYZ;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

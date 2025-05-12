@@ -1,4 +1,4 @@
-package com.zhy.springboot.superuserserver.utils;
+package com.zhy.springboot.superuserserver.bean.dto;
 
 /**
  * @Author zhy

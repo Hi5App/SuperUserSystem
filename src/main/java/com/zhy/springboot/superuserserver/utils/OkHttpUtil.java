@@ -40,6 +40,7 @@ public class OkHttpUtil {
         try (Response response = okHttpClient.newCall(request).execute()) {
             int status = response.code();
             if (status == 200) {
+                log.info("postForFile: " + status);
                 return response.body().bytes();
             } else {
                 log.error("postForFile: " + status);

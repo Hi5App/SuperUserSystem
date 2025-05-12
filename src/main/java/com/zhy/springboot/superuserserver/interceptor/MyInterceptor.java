@@ -1,34 +1,14 @@
 package com.zhy.springboot.superuserserver.interceptor;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.zhy.springboot.superuserserver.bean.MissingInfo;
-import com.zhy.springboot.superuserserver.config.GlobalConfigs;
-import com.zhy.springboot.superuserserver.controller.DetectController;
-import com.zhy.springboot.superuserserver.utils.TaskInfo;
-import com.zhy.springboot.superuserserver.utils.Utils;
-import com.zhy.springboot.superuserserver.utils.XYZ;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.util.ContentCachingRequestWrapper;
 
-import javax.rmi.CORBA.Util;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.attribute.PosixFilePermission;
-import java.nio.file.attribute.PosixFilePermissions;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 /**
  * @Author zhy

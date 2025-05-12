@@ -2,9 +2,8 @@ package com.zhy.springboot.superuserserver.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.zhy.springboot.superuserserver.bean.BranchingInfo;
-import com.zhy.springboot.superuserserver.bean.CrossingInfo;
-import com.zhy.springboot.superuserserver.bean.MissingInfo;
+import com.zhy.springboot.superuserserver.bean.dto.*;
+import com.zhy.springboot.superuserserver.bean.entity.*;
 import com.zhy.springboot.superuserserver.config.GlobalConfigs;
 import com.zhy.springboot.superuserserver.service.DetectService;
 import com.zhy.springboot.superuserserver.utils.*;
@@ -24,7 +23,10 @@ import java.nio.file.attribute.PosixFilePermissions;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * @Author zhy
@@ -45,8 +47,8 @@ public class DetectController {
     @Autowired
     private GlobalConfigs globalConfigs;
 
-    public final Map<String, TaskInfo> mapForMissing = new HashMap<>();
-    public final Map<String, TaskInfo> mapForCrossing = new HashMap<>();
+    public final Map<String, TaskInfo> mapForMissing = new ConcurrentHashMap<>();
+    public final Map<String, TaskInfo> mapForCrossing = new ConcurrentHashMap<>();
 
     @PostMapping(value = {"/file/for-missing"})
     public R getSwcFileForMissing(MultipartFile swcFile) {
@@ -281,6 +283,7 @@ public class DetectController {
             r.setCode("201");
             return r;
         }
+        mapForCrossing.remove(swcNameWithNoSuffix);
 
         File f = new File(taskInfo.getSwcPath());
         if (!f.exists()) {
@@ -298,30 +301,54 @@ public class DetectController {
             return r;
         }
 
-        List<XYZ> resList = utils.getResMap().get(obj);
-        List<Map<String, Object>> list = new ArrayList<>();
+        DetectCrossingResData resData = new DetectCrossingResData();
+        List<FiberPredictedResult> fiberPredictedResultList = new ArrayList<>();
         int size = result.size();
         for (int i = 0; i < size; i++) {
-            Map<String, Object> tmpMap = new HashMap<>(4);
-            JSONObject jsonObject = result.getJSONObject(i);
-            String name = jsonObject.getString("name");
+            FiberPredictedResult fiberPredictedResult = new FiberPredictedResult();
+            JSONObject fiberPredictedResultJO = result.getJSONObject(i);
 
-            String maxCoors = taskInfo.getCurCoor2MaxCoorMap().get(name);
-            String[] retvals = maxCoors.split("_");
-            List<Float> allCoors = Arrays.stream(retvals)
-                    .map(Float::valueOf)
-                    .collect(Collectors.toList());
-            // for (int j = 0; j < 3; j++) {
-            //     rCoors.add((allCoors.get(j) + allCoors.get(j+3)) / 2);
-            // }
-            tmpMap.put("coors", allCoors);
-            tmpMap.put("y_pred", jsonObject.getInteger("y_pred"));
-            list.add(tmpMap);
+            Integer y_pred = fiberPredictedResultJO.getInteger("y_pred");
+            fiberPredictedResult.setY_pred(y_pred);
+
+            List<FiberCoorInfo> fiberCoorInfoList = new ArrayList<>();
+            JSONArray fiberCoorInfoListJA = fiberPredictedResultJO.getJSONArray("fiberCoorInfoList");
+            for (int j = 0; j < fiberCoorInfoListJA.size(); j++){
+                FiberCoorInfo fiberCoorInfo = new FiberCoorInfo();
+                JSONObject fiberCoorInfoJO = result.getJSONObject(i);
+
+                String coor = fiberCoorInfoJO.getString("coor");
+                String maxCoor = taskInfo.getCurCoor2MaxCoorMap().get(coor);
+                String[] retvals = maxCoor.split("_");
+                List<Float> allCoors = Arrays.stream(retvals)
+                        .map(Float::valueOf)
+                        .collect(Collectors.toList());
+                fiberCoorInfo.setCoor(new XYZ(allCoors.get(0), allCoors.get(1), allCoors.get(2)));
+
+                List<XYZ> maxFiberCoorList = new ArrayList<>();
+                JSONArray fiberCoorListJA = fiberCoorInfoJO.getJSONArray("fiberCoorList");
+                for (int p = 0; p < fiberCoorListJA.size(); p++){
+                    String fiberCoor = fiberCoorListJA.getString(p);
+                    String maxFiberCoor = taskInfo.getCurCoor2MaxCoorMap().get(fiberCoor);
+                    String[] tmpRetvals = maxFiberCoor.split("_");
+                    List<Float> tmpAllCoors = Arrays.stream(tmpRetvals)
+                            .map(Float::valueOf)
+                            .collect(Collectors.toList());
+                    maxFiberCoorList.add(new XYZ(tmpAllCoors.get(0), tmpAllCoors.get(1), tmpAllCoors.get(2)));
+                }
+                fiberCoorInfo.setFiberCoorList(maxFiberCoorList);
+                fiberCoorInfoList.add(fiberCoorInfo);
+            }
+            fiberPredictedResult.setFiberCoorInfoList(fiberCoorInfoList);
+            fiberPredictedResultList.add(fiberPredictedResult);
         }
+
+        resData.setFiberPredictedResultList(fiberPredictedResultList);
+
         r.setCode("200");
         r.setMsg("success!");
         log.info("detect crossing success!");
-        r.setData(list);
+        r.setData(resData);
         return r;
     }
 
@@ -342,6 +369,7 @@ public class DetectController {
             r.setCode("201");
             return r;
         }
+        mapForMissing.remove(swcNameWithNoSuffix);
 
         File f = new File(taskInfo.getSwcPath());
         if (!f.exists()) {
@@ -359,14 +387,15 @@ public class DetectController {
             return r;
         }
 
-        List<XYZ> resList = utils.getResMap().get(obj);
-        List<Map<String, Object>> list = new ArrayList<>();
+        DetectMissingResData detectMissingResData = new DetectMissingResData();
+        List<CoorPredictedResult> list = new ArrayList<>();
         int size = result.size();
         for (int i = 0; i < size; i++) {
             Map<String, Object> tmpMap = new HashMap<>(4);
+            CoorPredictedResult coorPredictedResult = new CoorPredictedResult();
+
             JSONObject jsonObject = result.getJSONObject(i);
             String name = jsonObject.getString("name");
-
             String maxCoors = taskInfo.getCurCoor2MaxCoorMap().get(name);
             String[] retvals = maxCoors.split("_");
             List<Float> allCoors = Arrays.stream(retvals)
@@ -375,14 +404,25 @@ public class DetectController {
             // for (int j = 0; j < 3; j++) {
             //     rCoors.add((allCoors.get(j) + allCoors.get(j+3)) / 2);
             // }
-            tmpMap.put("coors", allCoors);
-            tmpMap.put("y_pred", jsonObject.getInteger("y_pred"));
-            list.add(tmpMap);
+
+            coorPredictedResult.setMaxResCoor(new XYZ(allCoors.get(0), allCoors.get(1), allCoors.get(2)));
+            coorPredictedResult.setStoreDirName(name);
+            coorPredictedResult.setY_pred(jsonObject.getInteger("y_pred"));
+
+            list.add(coorPredictedResult);
         }
+        detectMissingResData.setCoorPredictedResultList(list);
+
+        String tipDirPathStr = String.join(File.separator, globalConfigs.getSavePathForPredict(), "tip");
+        Path tipDirPath = Paths.get(tipDirPathStr);
+        Path timeDirPath = Paths.get(taskInfo.getBaseDirPath());
+        String relPathStr = tipDirPath.relativize(timeDirPath).toString();
+        detectMissingResData.setRelPath(relPathStr);
+
         r.setCode("200");
         r.setMsg("success!");
         log.info("detect missing success!");
-        r.setData(list);
+        r.setData(detectMissingResData);
         return r;
     }
 

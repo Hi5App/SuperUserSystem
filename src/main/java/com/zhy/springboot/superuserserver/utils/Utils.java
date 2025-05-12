@@ -3,6 +3,8 @@ package com.zhy.springboot.superuserserver.utils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.zhy.springboot.superuserserver.bean.entity.BBox;
+import com.zhy.springboot.superuserserver.bean.entity.XYZ;
 import com.zhy.springboot.superuserserver.config.GlobalConfigs;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +19,7 @@ import java.nio.file.attribute.PosixFilePermission;
 import java.nio.file.attribute.PosixFilePermissions;
 import java.text.DecimalFormat;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Semaphore;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -37,7 +40,7 @@ public class Utils {
     private OkHttpUtil okHttpUtil;
 
     @Getter
-    private final Map<String, List<XYZ>> resMap = new HashMap<>();
+    private final Map<String, List<XYZ>> resMap = new ConcurrentHashMap<>();
 
     public void setSemaphore() {
         if (semaphore == null) {
@@ -262,7 +265,7 @@ public class Utils {
         byte[] bytes = okHttpUtil.postForFile(globalConfigs.getUrlForGetBBImage(), JSON.toJSONString(bBox));
         if (bytes == null) {
             log.info("get cropimage error!");
-            return ;
+            return;
         }
         String tifName = "optical.v3dpbd";
         String tifPath = String.join(File.separator,dirPath,tifName);

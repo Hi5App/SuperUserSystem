@@ -1,27 +1,27 @@
-package com.zhy.springboot.superuserserver.bean;
+package com.zhy.springboot.superuserserver.bean.dto;
 
-import com.zhy.springboot.superuserserver.utils.XYZ;
+import com.zhy.springboot.superuserserver.bean.entity.XYZ;
 import lombok.Getter;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 /**
  * @Author zhy
- * @Date 2023/6/27 15:49
- * @Description This is description of class
+ * @Date 2024/2/23 13:49
+ * @Description BranchingInfo类
  * @Since version-1.0
  */
 @Getter
-public class MissingInfo {
+public class BranchingInfo {
     // 图像名相对路径
     private String objRelaventPath;
     // 图像名
     private String obj;
     // 中心坐标列表
     private List<XYZ> coors;
-    // swcNameWithNoSuffix 作为标识
-    private String swcNameWithNoSuffix;
+    //swc文件名
+    private String swcName;
+
     // swc文件
     // private MultipartFile swcFile;
 
@@ -33,14 +33,12 @@ public class MissingInfo {
     //     this.swcFile = swcFile;
     // }
 
-    public MissingInfo() {
+    public BranchingInfo() {
     }
 
-    public MissingInfo(String obj, List<XYZ> coors, String swcNameWithNoSuffix, String objRelaventPath) {
+    public BranchingInfo(String obj, List<XYZ> coors) {
         this.obj = obj;
         this.coors = coors;
-        this.swcNameWithNoSuffix = swcNameWithNoSuffix;
-        this.objRelaventPath = objRelaventPath;
     }
 
     public void setObjRelaventPath(String objRelaventPath) {
@@ -55,8 +53,8 @@ public class MissingInfo {
         this.coors = coors;
     }
 
-    public void setswcNameWithNoSuffix(String swcNameWithNoSuffix) {
-        this.swcNameWithNoSuffix = swcNameWithNoSuffix;
+    public void setSwcName(String swcName) {
+        this.swcName = swcName;
     }
 
     @Override
@@ -64,7 +62,6 @@ public class MissingInfo {
         return "MissingInfo{" +
                 "obj='" + obj + '\'' +
                 ", coors=" + coors +
-                ", swcNameWithNoSuffix='" + swcNameWithNoSuffix + '\'' +
                 '}';
     }
 }

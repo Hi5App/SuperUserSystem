@@ -1,23 +1,19 @@
 package com.zhy.springboot.superuserserver.utils;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import com.zhy.springboot.superuserserver.bean.entity.TaskInfo;
+import com.zhy.springboot.superuserserver.bean.entity.XYZ;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.PosixFilePermission;
 import java.nio.file.attribute.PosixFilePermissions;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -47,7 +43,7 @@ public class CrossingModelUtils extends BaseModelUtils{
         return super.detectByModel(url, json);
     }
 
-    public void preProcess(TaskInfo taskInfo, String obj, String objRelaventPath, List<XYZ> coors, int[] patchSize) {
+    public void preProcess(TaskInfo taskInfo, String obj, String objRelaventPath, List<Pair<XYZ, XYZ>> coors, int[] patchSize) {
         log.info("enter crossingModelUtils preProcess...");
         //get username and password
         String username = globalConfigs.getUsername();
@@ -80,18 +76,16 @@ public class CrossingModelUtils extends BaseModelUtils{
 
         utils.copySwcFile2AnotherPath(obj, taskInfo.getSwcPath(), swcFile.getName());
 
-        for (XYZ coor : coors) {
-            // String xmin = String.format("%06d", (int) coor.x - patchSize[0] / 2);
-            // String ymin = String.format("%06d", (int) coor.y - patchSize[0] / 2);
-            // String zmin = String.format("%06d", (int) coor.z - patchSize[0] / 2);
-            // String xmax = String.format("%06d", (int) coor.x + patchSize[0] / 2);
-            // String ymax = String.format("%06d", (int) coor.y + patchSize[0] / 2);
-            // String zmax = String.format("%06d", (int) coor.z + patchSize[0] / 2);
-            //坐标转换
-            XYZ convertedCoor = utils.convertMaxRes2CurrResCoords(imageMaxRes, imageCurRes, coor.x, coor.y, coor.z);
+        for (Pair<XYZ, XYZ> coorPair : coors) {
+            // 坐标转换
+            XYZ convertedCoor1 = utils.convertMaxRes2CurrResCoords(imageMaxRes, imageCurRes, coorPair.getKey().x, coorPair.getKey().y, coorPair.getKey().z);
+            XYZ convertedCoor2 = utils.convertMaxRes2CurrResCoords(imageMaxRes, imageCurRes, coorPair.getValue().x, coorPair.getValue().y, coorPair.getValue().z);
 
-            String fileName = (int) convertedCoor.x + "_" + (int) convertedCoor.y + "_" + (int) convertedCoor.z;
-            taskInfo.getCurCoor2MaxCoorMap().put(fileName, coor.x + "_" + coor.y + "_" + coor.z);
+            String fileName = (int) convertedCoor1.x + "_" + (int) convertedCoor1.y + "_" + (int) convertedCoor1.z;
+            String convertedCoor1Str = convertedCoor1.x + "_" + convertedCoor1.y + "_" + convertedCoor1.z;
+            String convertedCoor2Str = convertedCoor2.x + "_" + convertedCoor2.y + "_" + convertedCoor2.z;
+            taskInfo.getCurCoor2MaxCoorMap().put(convertedCoor1Str, coorPair.getKey().x + "_" + coorPair.getKey().y + "_" + coorPair.getKey().z);
+            taskInfo.getCurCoor2MaxCoorMap().put(convertedCoor2Str, coorPair.getValue().x + "_" + coorPair.getValue().y + "_" + coorPair.getValue().z);
 
             String dirPath = String.join(File.separator, taskInfo.getBaseDirPath(), fileName);
             Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxrwxrwx");
@@ -112,13 +106,13 @@ public class CrossingModelUtils extends BaseModelUtils{
             }
 
             // 获取图像块
-            XYZ pa1 = new XYZ((int) (convertedCoor.x - patchSize[0] / 2), (int) (convertedCoor.y - patchSize[0] / 2), (int) (convertedCoor.z - patchSize[0] / 2));
-            XYZ pa2 = new XYZ((int) (convertedCoor.x + patchSize[0] / 2), (int) (convertedCoor.y + patchSize[0] / 2), (int) (convertedCoor.z + patchSize[0] / 2));
-            String objMiddlePath = obj;
+            XYZ pa1 = new XYZ((int) (convertedCoor1.x - patchSize[0] / 2), (int) (convertedCoor1.y - patchSize[0] / 2), (int) (convertedCoor1.z - patchSize[0] / 2));
+            XYZ pa2 = new XYZ((int) (convertedCoor1.x + patchSize[0] / 2), (int) (convertedCoor1.y + patchSize[0] / 2), (int) (convertedCoor1.z + patchSize[0] / 2));
+            String imagePath = obj;
             if(objRelaventPath != null){
-                objMiddlePath = String.join(File.separator, objRelaventPath, obj);
+                imagePath = String.join(File.separator, objRelaventPath, obj);
             }
-            utils.getCroppedImage(pa1, pa2, dirPath, objMiddlePath, imageCurRes, username, password);
+            utils.getCroppedImage(pa1, pa2, dirPath, imagePath, imageCurRes, username, password);
 
             //获取切割后的swc
             utils.getCroppedSwc(pa1, pa2, swcName, resForCropSwc, username, password, dirPath);

@@ -1,7 +1,6 @@
-package com.zhy.springboot.superuserserver.bean;
+package com.zhy.springboot.superuserserver.bean.dto;
 
-import com.zhy.springboot.superuserserver.utils.PointInfo;
-import com.zhy.springboot.superuserserver.utils.XYZ;
+import com.zhy.springboot.superuserserver.bean.entity.PointInfo;
 import lombok.Getter;
 
 import java.util.List;

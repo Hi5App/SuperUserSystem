@@ -4,14 +4,12 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zhy.springboot.superuserserver.config.GlobalConfigs;
 import com.zhy.springboot.superuserserver.controller.DetectController;
-import com.zhy.springboot.superuserserver.utils.TaskInfo;
+import com.zhy.springboot.superuserserver.bean.entity.TaskInfo;
 import com.zhy.springboot.superuserserver.utils.Utils;
-import com.zhy.springboot.superuserserver.utils.XYZ;
+import com.zhy.springboot.superuserserver.bean.entity.XYZ;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.util.ContentCachingRequestWrapper;
-import org.springframework.web.util.ContentCachingResponseWrapper;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

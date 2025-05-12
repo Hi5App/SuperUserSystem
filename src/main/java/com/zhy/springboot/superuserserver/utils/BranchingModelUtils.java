@@ -1,23 +1,18 @@
 package com.zhy.springboot.superuserserver.utils;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import com.zhy.springboot.superuserserver.bean.entity.TaskInfo;
+import com.zhy.springboot.superuserserver.bean.entity.XYZ;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.PosixFilePermission;
 import java.nio.file.attribute.PosixFilePermissions;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -93,11 +88,11 @@ public class BranchingModelUtils extends BaseModelUtils {
             // 获取图像块
             XYZ pa1 = new XYZ((int) (convertedCoor.x - patchSize[0] / 2), (int) (convertedCoor.y - patchSize[0] / 2), (int) (convertedCoor.z - patchSize[0] / 2));
             XYZ pa2 = new XYZ((int) (convertedCoor.x + patchSize[0] / 2), (int) (convertedCoor.y + patchSize[0] / 2), (int) (convertedCoor.z + patchSize[0] / 2));
-            String objMiddlePath = obj;
+            String imagePath = obj;
             if(objRelaventPath != null){
-                objMiddlePath = String.join(File.separator, objRelaventPath, obj);
+                imagePath = String.join(File.separator, objRelaventPath, obj);
             }
-            utils.getCroppedImage(pa1, pa2, dirPath, objMiddlePath, imageCurRes, username, password);
+            utils.getCroppedImage(pa1, pa2, dirPath, imagePath, imageCurRes, username, password);
         }
 
     }

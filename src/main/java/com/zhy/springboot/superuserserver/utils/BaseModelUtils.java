@@ -1,20 +1,15 @@
 package com.zhy.springboot.superuserserver.utils;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.zhy.springboot.superuserserver.bean.entity.TaskInfo;
+import com.zhy.springboot.superuserserver.bean.entity.XYZ;
 import com.zhy.springboot.superuserserver.config.GlobalConfigs;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.methods.PostMethod;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Author zhy
@@ -49,7 +44,6 @@ public abstract class BaseModelUtils {
 
     public abstract void loadModel() ;
     public abstract void unloadModel() ;
-    public abstract void preProcess(TaskInfo taskInfo, String obj, String objRelaventPath, List<XYZ> coors, int[] patchSize);
     public abstract void postProcess(String swcPath, String baseDir);
     public JSONArray detectByModel(String url, String json) {
         String result = okHttpUtil.postForJsonString(url, json);
